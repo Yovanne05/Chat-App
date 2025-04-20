@@ -6,7 +6,7 @@ import messageRoutes from "./routes/messageRoutes";
 
 const app = express();
 
-// Middleware
+// TODO : Middleware à faire
 app.use(cors());
 app.use(express.json());
 
