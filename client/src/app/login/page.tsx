@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from 'react';
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import LoginForm from "@/app/login/components/login-form";
 import RegisterForm from "@/app/login/components/register-form";
-import {AuthResponse} from "@/types/auth";
-import {setAuthToken} from "@/utils/auth";
+import { AuthResponse } from "@/types/auth";
+import { setAuthToken } from "@/utils/auth";
 
 export default function LoginPage() {
     const [isLogin, setIsLogin] = useState(true);
@@ -17,12 +17,11 @@ export default function LoginPage() {
     };
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg shadow-md">
+        <main className="min-h-screen flex items-center justify-center bg-black bg-cover bg-no-repeat"
+              style={{ backgroundImage: "url('https://your-background-image-url.com')" }}>
+            <div className="w-full max-w-2xl space-y-8 bg-black bg-opacity-60 p-8 rounded-lg shadow-lg">
                 <div className="text-center">
-                    <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                        {isLogin ? 'Connexion' : 'Inscription'}
-                    </h2>
+                    <h2 className="text-4xl font-extrabold text-white">{isLogin ? 'Connexion' : 'Inscription'}</h2>
                 </div>
                 {isLogin ? (
                     <LoginForm
@@ -35,10 +34,10 @@ export default function LoginPage() {
                         onError={(error) => alert(error.message)}
                     />
                 )}
-                <div className="text-center">
+                <div className="text-center text-white">
                     <button
                         onClick={() => setIsLogin(!isLogin)}
-                        className="text-sm text-blue-600 hover:text-blue-800"
+                        className="text-sm text-blue-500 hover:text-blue-700 focus:outline-none"
                     >
                         {isLogin
                             ? 'Pas de compte ? S\'inscrire'
