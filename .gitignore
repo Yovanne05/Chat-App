@@ -39,7 +39,6 @@ client/.svelte-kit
 client/package-lock.json
 client/yarn.lock
 client/pnpm-lock.yaml
-client/**
 
 # Fichiers générés
 client/.next
