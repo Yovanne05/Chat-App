@@ -23,25 +23,25 @@ back/.npm
 back/.yarn
 back/.pnp
 
-### Frontend (Next.js) ###
-front/.next/
-front/out/
-front/.env
-front/.env.local
-front/.env.development
-front/.env.production
-front/.env.test
-front/.vercel
-front/.cache
-front/.turbo
-front/node_modules/
-front/.svelte-kit
-front/package-lock.json
-front/yarn.lock
-front/pnpm-lock.yaml
-front/**
+### front (Next.js) ###
+client/.next/
+client/out/
+client/.env
+client/.env.local
+client/.env.development
+client/.env.production
+client/.env.test
+client/.vercel
+client/.cache
+client/.turbo
+client/node_modules/
+client/.svelte-kit
+client/package-lock.json
+client/yarn.lock
+client/pnpm-lock.yaml
+client/**
 
 # Fichiers générés
-front/.next
-front/next-env.d.ts
-front/tsconfig.tsbuildinfo
+client/.next
+client/next-env.d.ts
+client/tsconfig.tsbuildinfo
