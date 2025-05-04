@@ -15,3 +15,19 @@ export const getFriendsById = async (userId: string): Promise<User[]> => {
     }
     return response.json();
 };
+
+
+export const getCurrentUser = async (token: string): Promise<User> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Échec de la récupération de l\'utilisateur');
+    }
+
+    return response.json();
+};

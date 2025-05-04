@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { getCurrentUser } from '@/services/authService';
 import { User } from '@/types/user';
 import {getAuthToken, removeAuthToken} from "@/utils/auth";
+import {getCurrentUser} from "@/services/userService";
 
 export const useAuth = () => {
     const [user, setUser] = useState<User | null>(null);

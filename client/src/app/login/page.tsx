@@ -17,11 +17,10 @@ export default function LoginPage() {
     };
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-black bg-cover bg-no-repeat"
-              style={{ backgroundImage: "url('https://your-background-image-url.com')" }}>
+        <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-black to-gray-900">
             <div className="w-full max-w-2xl space-y-8 bg-black bg-opacity-60 p-8 rounded-lg shadow-lg">
                 <div className="text-center">
-                    <h2 className="text-4xl font-extrabold text-white">{isLogin ? 'Connexion' : 'Inscription'}</h2>
+                    <h2 className="text-4xl font-extrabold text-white">{isLogin ? 'CONNEXION' : 'INSCRIPTION'}</h2>
                 </div>
                 {isLogin ? (
                     <LoginForm
@@ -40,8 +39,8 @@ export default function LoginPage() {
                         className="text-sm text-blue-500 hover:text-blue-700 focus:outline-none"
                     >
                         {isLogin
-                            ? 'Pas de compte ? S\'inscrire'
-                            : 'Déjà un compte ? Se connecter'}
+                            ? 'S\'inscrire'
+                            : 'Se connecter'}
                     </button>
                 </div>
             </div>

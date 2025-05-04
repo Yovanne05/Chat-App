@@ -1,56 +1,49 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { AuthResponse } from "@/types/auth";
-import { login } from "@/services/authService";
+import { useLoginForm } from "@/app/login/hooks/useLoginForm";
 
 interface LoginFormProps {
     onSuccess: (data: AuthResponse) => void;
     onError?: (error: Error) => void;
 }
 
-const LoginForm: FC<LoginFormProps> = ({ onSuccess, onError }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        try {
-            const response = await login({ email, password });
-            onSuccess(response);
-        } catch (error) {
-            onError?.(error as Error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+export const LoginForm: FC<LoginFormProps> = ({ onSuccess, onError }) => {
+    const {
+        email,
+        password,
+        isLoading,
+        setEmail,
+        setPassword,
+        handleSubmit,
+    } = useLoginForm({ onSuccess, onError });
 
     return (
-        <div className="flex items-center justify-center bg-black bg-cover bg-no-repeat border">
-            <div className="bg-black bg-opacity-70 p-8 rounded-xl max-w-md w-full shadow-lg">
-                <h2 className="text-4xl font-bold text-white text-center mb-8">Se connecter</h2>
+        <div className="flex items-center justify-center px-4">
+            <div className="bg-white/5 backdrop-blur-sm p-10 rounded-2xl max-w-md w-full shadow-xl border border-white/10">
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300">Email</label>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                            Email
+                        </label>
                         <input
                             id="email"
-                            type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="mt-1 block w-full rounded-md bg-gray-800 text-white border border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 p-4"
+                            className="mt-2 block w-full rounded-xl bg-gray-800 text-white border border-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition-all"
                             required
                             placeholder="Entrez votre email"
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-300">Mot de passe</label>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                            Mot de passe
+                        </label>
                         <input
                             id="password"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="mt-1 block w-full rounded-md bg-gray-800 text-white border border-gray-600 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 p-4"
+                            className="mt-2 block w-full rounded-xl bg-gray-800 text-white border border-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition-all"
                             required
                             placeholder="Entrez votre mot de passe"
                         />
@@ -58,7 +51,7 @@ const LoginForm: FC<LoginFormProps> = ({ onSuccess, onError }) => {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full py-4 rounded-md bg-red-600 text-white text-lg font-medium transition-all duration-300 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-red-400"
+                        className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-base font-medium shadow-sm transition-all"
                     >
                         {isLoading ? 'Connexion en cours...' : 'Se connecter'}
                     </button>

@@ -1,7 +1,6 @@
-import { FC, useState } from 'react';
-import {AuthResponse} from "@/types/auth";
-import {register} from "@/services/authService";
-
+import { FC } from 'react';
+import { AuthResponse } from "@/types/auth";
+import { useRegisterForm } from "@/app/login/hooks/useRegisterForm";
 
 interface RegisterFormProps {
     onSuccess: (data: AuthResponse) => void;
@@ -9,99 +8,87 @@ interface RegisterFormProps {
 }
 
 const RegisterForm: FC<RegisterFormProps> = ({ onSuccess, onError }) => {
-    const [formData, setFormData] = useState({
-        username: '',
-        pseudo: '',
-        email: '',
-        password: '',
-    });
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        try {
-            const response = await register(formData);
-            onSuccess(response);
-        } catch (error) {
-            onError?.(error as Error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
+    const {
+        formData,
+        isLoading,
+        handleChange,
+        handleSubmit,
+    } = useRegisterForm({ onSuccess, onError });
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                    Nom utilisateur
-                </label>
-                <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    value={formData.username}
-                    onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
-                    required
-                />
+        <div className="flex items-center justify-center px-4">
+            <div className="bg-white/5 backdrop-blur-sm p-10 rounded-2xl max-w-md w-full shadow-xl border border-white/10">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label htmlFor="username" className="block text-sm font-medium text-gray-300">
+                            Nom utilisateur
+                        </label>
+                        <input
+                            id="username"
+                            name="username"
+                            type="text"
+                            value={formData.username}
+                            onChange={handleChange}
+                            className="mt-2 block w-full rounded-xl bg-gray-800 text-white border border-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition-all"
+                            required
+                            placeholder="Entrez un nom d'utilisateur"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="pseudo" className="block text-sm font-medium text-gray-300">
+                            Pseudo
+                        </label>
+                        <input
+                            id="pseudo"
+                            name="pseudo"
+                            type="text"
+                            value={formData.pseudo}
+                            onChange={handleChange}
+                            className="mt-2 block w-full rounded-xl bg-gray-800 text-white border border-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition-all"
+                            required
+                            placeholder="Entrez un pseudo"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                            Email
+                        </label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="mt-2 block w-full rounded-xl bg-gray-800 text-white border border-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition-all"
+                            required
+                            placeholder="Entrez votre email"
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                            Mot de passe
+                        </label>
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="mt-2 block w-full rounded-xl bg-gray-800 text-white border border-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition-all"
+                            required
+                            placeholder="Créez un mot de passe"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        disabled={isLoading}
+                        className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-base font-medium shadow-sm transition-all"
+                    >
+                        {isLoading ? 'Inscription en cours...' : 'S’inscrire'}
+                    </button>
+                </form>
             </div>
-            <div>
-                <label htmlFor="pseudo" className="block text-sm font-medium text-gray-700">
-                    Pseudo
-                </label>
-                <input
-                    id="pseudo"
-                    name="pseudo"
-                    type="text"
-                    value={formData.pseudo}
-                    onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
-                    required
-                />
-            </div>
-            <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                    Email
-                </label>
-                <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
-                    required
-                />
-            </div>
-            <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                    Mot de passe
-                </label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border"
-                    required
-                />
-            </div>
-            <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-green-300"
-            >
-                {isLoading ? 'Inscription en cours...' : 'S\'inscrire'}
-            </button>
-        </form>
+        </div>
     );
 };
 
