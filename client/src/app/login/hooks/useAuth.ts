@@ -16,7 +16,7 @@ export const useAuth = () => {
 
         const fetchUser = async () => {
             try {
-                const currentUser = await getCurrentUser(token);
+                const currentUser = await getCurrentUser();
                 setUser(currentUser);
             } catch {
                 removeAuthToken();

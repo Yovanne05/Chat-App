@@ -1,4 +1,5 @@
 import {User} from "@/types/user";
+import {getAuthToken} from "@/utils/auth";
 
 export const getUsers = async (): Promise<User[]> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
@@ -17,7 +18,8 @@ export const getFriendsById = async (userId: string): Promise<User[]> => {
 };
 
 
-export const getCurrentUser = async (token: string): Promise<User> => {
+export const getCurrentUser = async (): Promise<User> => {
+    const token: string | null = getAuthToken();
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
         method: 'GET',
         headers: {

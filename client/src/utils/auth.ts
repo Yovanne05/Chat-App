@@ -11,3 +11,8 @@ export const setAuthToken = (token: string): void => {
 export const removeAuthToken = (): void => {
     localStorage.removeItem(AUTH_TOKEN_KEY);
 };
+
+export const isAuthTokenInitialized = (): boolean => {
+    const token = getAuthToken();
+    return token !== null && token.trim() !== '';
+};

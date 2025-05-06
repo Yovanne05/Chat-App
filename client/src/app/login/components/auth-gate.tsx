@@ -1,6 +1,7 @@
 "use client"
 import dynamic from 'next/dynamic';
-import {useAuth} from "@/hooks/useAuth";
+import {useAuth} from "@/app/login/hooks/useAuth";
+
 
 const LoginPage = dynamic(() => import('@/app/login/page'));
 const UsersPage = dynamic(() => import('@/app/friend/page'));

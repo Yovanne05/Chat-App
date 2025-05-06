@@ -1,5 +1,4 @@
 import { AuthResponse, LoginData, RegisterData } from "@/types/auth";
-import {User} from "@/types/user";
 
 export const login = async (data: LoginData): Promise<AuthResponse> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {

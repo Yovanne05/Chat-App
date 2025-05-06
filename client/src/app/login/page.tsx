@@ -17,8 +17,8 @@ export default function LoginPage() {
     };
 
     return (
-        <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-black to-gray-900">
-            <div className="w-full max-w-2xl space-y-8 bg-black bg-opacity-60 p-8 rounded-lg shadow-lg">
+        <div className="flex flex-col items-center justify-center min-h-screen w-full p-4">
+            <div className="w-full max-w-2xl space-y-8 bg-opacity-60 p-8 rounded-lg shadow-lg">
                 <div className="text-center">
                     <h2 className="text-4xl font-extrabold text-white">{isLogin ? 'CONNEXION' : 'INSCRIPTION'}</h2>
                 </div>
@@ -44,6 +44,6 @@ export default function LoginPage() {
                     </button>
                 </div>
             </div>
-        </main>
+        </div>
     );
 }
