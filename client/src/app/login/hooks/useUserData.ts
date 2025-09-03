@@ -3,7 +3,7 @@ import { User } from '@/types/user';
 import {getAuthToken, removeAuthToken} from "@/utils/auth";
 import {getCurrentUser} from "@/services/userService";
 
-export const useAuth = () => {
+export const useUserData = () => {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 

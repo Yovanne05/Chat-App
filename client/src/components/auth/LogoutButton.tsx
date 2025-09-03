@@ -1,15 +1,15 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { removeAuthToken } from '@/utils/auth'
+import {useAuth} from "@/components/auth/AuthContext";
 
 export function LogoutButton({ className = '' }: { className?: string }) {
     const router = useRouter()
+    const { logout } = useAuth()
 
     const handleLogout = () => {
-        removeAuthToken()
+        logout()
         router.push('/login')
-        router.refresh()
     }
 
     return (

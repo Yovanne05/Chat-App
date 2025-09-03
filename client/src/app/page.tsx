@@ -1,21 +1,11 @@
 "use client"
 
-import { useEffect, useState } from 'react';
-import { getAuthToken } from '@/utils/auth';
+import {useAuth} from "@/components/auth/AuthContext";
 import LoginPage from '@/app/login/page';
 import UsersPage from '@/app/friend/page';
 
 export default function Home() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+    const { isAuthenticated } = useAuth();
 
-  useEffect(() => {
-    const token = getAuthToken();
-    setIsAuthenticated(!!token);
-  }, []);
-
-  if (isAuthenticated === null) {
-    return <div>Chargement...</div>;
-  }
-
-  return isAuthenticated ? <UsersPage /> : <LoginPage />;
+    return isAuthenticated ? <UsersPage /> : <LoginPage />;
 }

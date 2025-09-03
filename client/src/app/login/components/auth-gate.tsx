@@ -1,13 +1,12 @@
 "use client"
 import dynamic from 'next/dynamic';
-import {useAuth} from "@/app/login/hooks/useAuth";
-
+import {useUserData} from "@/app/login/hooks/useUserData";
 
 const LoginPage = dynamic(() => import('@/app/login/page'));
 const UsersPage = dynamic(() => import('@/app/friend/page'));
 
 export default function AuthGate() {
-    const { user, isLoading } = useAuth();
+    const { user, isLoading } = useUserData();
 
     if (isLoading) {
         return <div>Chargement...</div>;

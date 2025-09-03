@@ -1,15 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { isAuthTokenInitialized } from '@/utils/auth'
+import {useAuth} from "@/components/auth/AuthContext";
 import { LogoutButton } from './LogoutButton'
 
 export function AuthStatus() {
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-    useEffect(() => {
-        setIsAuthenticated(isAuthTokenInitialized())
-    }, [])
+    const { isAuthenticated } = useAuth()
 
     if (!isAuthenticated) return null
 

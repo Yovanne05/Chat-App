@@ -5,14 +5,15 @@ import { useRouter } from "next/navigation";
 import LoginForm from "@/app/login/components/login-form";
 import RegisterForm from "@/app/login/components/register-form";
 import { AuthResponse } from "@/types/auth";
-import { setAuthToken } from "@/utils/auth";
+import {useAuth} from "@/components/auth/AuthContext";
 
 export default function LoginPage() {
     const [isLogin, setIsLogin] = useState(true);
     const router = useRouter();
+    const { login } = useAuth();
 
     const handleAuthSuccess = (data: AuthResponse) => {
-        setAuthToken(data.token);
+        login(data.token);
         router.push('/');
     };
 
