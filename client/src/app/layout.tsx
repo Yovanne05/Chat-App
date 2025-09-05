@@ -1,7 +1,6 @@
 import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
-import {AuthStatus} from "@/components/auth/AuthStatus";
 import {AuthProvider} from "@/components/auth/AuthContext";
 
 const geistSans = Geist({
@@ -18,6 +17,8 @@ export const metadata: Metadata = {
     title: "Chat App",
 };
 
+
+
 export default function RootLayout({
                                        children,
                                    }: Readonly<{
@@ -27,9 +28,6 @@ export default function RootLayout({
         <html lang="fr">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}>
         <AuthProvider>
-            <div className="fixed top-4 right-4 z-50">
-                <AuthStatus/>
-            </div>
             {children}
         </AuthProvider>
         </body>

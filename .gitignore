@@ -44,3 +44,5 @@ client/pnpm-lock.yaml
 client/.next
 client/next-env.d.ts
 client/tsconfig.tsbuildinfo
+
+.*

@@ -1,11 +1,24 @@
-"use client"
+"use client";
 
-import {useAuth} from "@/components/auth/AuthContext";
-import LoginPage from '@/app/login/page';
-import UsersPage from '@/app/friend/page';
+import { useAuth } from "@/components/auth/AuthContext";
+import LoginPage from "@/app/login/page";
+import SideBar from "./side_bar/page";
 
-export default function Home() {
-    const { isAuthenticated } = useAuth();
+export default function ProtectedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { isAuthenticated } = useAuth();
 
-    return isAuthenticated ? <UsersPage /> : <LoginPage />;
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  return (
+    <div className="flex">
+      <SideBar />
+      <main>{children}</main>
+    </div>
+  );
 }
