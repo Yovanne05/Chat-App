@@ -1,36 +1,38 @@
-import type {Metadata} from "next";
-import {Geist, Geist_Mono} from "next/font/google";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import {AuthProvider} from "@/components/auth/AuthContext";
+import { AuthProvider } from "@/components/auth/AuthContext";
+import SideBar from "./side_bar/page";
 
 const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-    title: "Chat App",
+  title: "Chat App",
 };
 
-
-
 export default function RootLayout({
-                                       children,
-                                   }: Readonly<{
-    children: React.ReactNode;
+  children,
+}: Readonly<{
+  children: React.ReactNode;
 }>) {
-    return (
-        <html lang="fr">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}>
+  return (
+    <html lang="fr">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+      >
         <AuthProvider>
-            {children}
+          <SideBar />
+          {children}
         </AuthProvider>
-        </body>
-        </html>
-    );
+      </body>
+    </html>
+  );
 }

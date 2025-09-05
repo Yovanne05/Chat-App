@@ -2,7 +2,6 @@
 
 import { useAuth } from "@/components/auth/AuthContext";
 import LoginPage from "@/app/login/page";
-import SideBar from "./side_bar/page";
 
 export default function ProtectedLayout({
   children,
@@ -17,7 +16,6 @@ export default function ProtectedLayout({
 
   return (
     <div className="flex">
-      <SideBar />
       <main>{children}</main>
     </div>
   );
