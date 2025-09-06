@@ -29,7 +29,7 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess, onError }) => {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="mt-2 block w-full rounded-xl bg-gray-800 text-white border border-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition-all"
+                            className="mt-2 block w-full rounded-xl bg-secondary-dark text-white border border-secondary placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary-500 p-3 transition-all"
                             required
                             placeholder="Entrez votre email"
                         />
@@ -43,7 +43,7 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess, onError }) => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="mt-2 block w-full rounded-xl bg-gray-800 text-white border border-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 p-3 transition-all"
+                            className="mt-2 block w-full rounded-xl bg-secondary-dark text-white border border-secondary placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary-500 p-3 transition-all"
                             required
                             placeholder="Entrez votre mot de passe"
                         />
@@ -51,7 +51,7 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess, onError }) => {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white text-base font-medium shadow-sm transition-all"
+                        className="w-full py-3 rounded-xl bg-secondary text-white text-base font-medium shadow-sm transition-all"
                     >
                         {isLoading ? 'Connexion en cours...' : 'Se connecter'}
                     </button>

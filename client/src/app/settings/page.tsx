@@ -1,11 +1,11 @@
-import {AuthStatus} from "@/components/auth/AuthStatus";
+import {LogoutButton} from "@/components/auth/LogoutButton";
 import ProfilComponent from "@/app/settings/components/profil";
 
 export default function SettingsPage() {
     return (
-        <div>
+        <div className="w-full max-w-md mx-auto mt-10 space-y-6">
             <ProfilComponent/>
-            <AuthStatus/>
+            <LogoutButton/>
         </div>
     );
 }
