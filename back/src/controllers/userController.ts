@@ -37,20 +37,21 @@ export const getFriends = async (req: Request, res: Response) => {
     try {
         const friends = await UserService.getFriends(userId);
         if (!friends) {
-            res.status(404).json({ error: "Utilisateur non trouvé" });
+            return res.status(404).json({ error: "Utilisateur non trouvé" });
         }
 
-        if (!friends || friends.length === 0) {
-            res.status(404).json({ error: "Aucun ami trouvé" });
-        }else{
-            const friendsDTO = friends.map(toUserDTO);
-            res.status(200).json(friendsDTO);
+        if (friends.length === 0) {
+            return res.status(404).json({ error: "Aucun ami trouvé" });
         }
-        res.status(500).json({ error: "Utilisateur non trouvé" });
+
+        const friendsDTO = friends.map(toUserDTO);
+        return res.status(200).json(friendsDTO);
+
     } catch (err: any) {
-        res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message });
     }
 };
+
 
 export const addFriendToUser = async (req: Request, res: Response) => {
     const { idUser, idNewFriend } = req.params;

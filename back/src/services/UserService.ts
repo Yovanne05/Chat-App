@@ -1,5 +1,5 @@
 import { IUser } from "../models/User";
-import { UserRepository } from "../repositories/UserRepository";
+import { UserRepository } from "../respository/UserRepository";
 
 export class UserService {
     static async getFriends(userId: string): Promise<IUser[] | null> {

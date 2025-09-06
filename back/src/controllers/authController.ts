@@ -2,6 +2,7 @@ import { RequestHandler } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User, { IUser } from '../models/User';
+import {toUserDTO} from "../dto/user.dto";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 if (!JWT_SECRET) throw new Error("JWT_SECRET n'est pas défini dans .env");
@@ -75,8 +76,7 @@ export const getMe: RequestHandler = async (req, res, next) => {
         const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
         const user = await User.findById(decoded.id).select('-password');
         if (!user) res.status(404).json({ message: 'Utilisateur non trouvé' });
-
-        res.status(200).json(user);
+        res.status(200).json(toUserDTO(user));
     } catch (error) {
         next(error);
     }

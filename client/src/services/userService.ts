@@ -18,7 +18,6 @@ export class UserService {
         if (!response.ok) throw new Error('Failed to fetch friends');
 
         const data: UserDTO[] = await response.json();
-
         return data.map(toUser);
     }
 
@@ -28,7 +27,6 @@ export class UserService {
             credentials: 'include',
         });
         if (!response.ok) throw new Error("Échec de la récupération de l'utilisateur");
-
         const data: UserDTO = await response.json();
         return toUser(data);
     }

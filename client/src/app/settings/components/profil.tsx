@@ -11,17 +11,19 @@ export default function ProfilComponent() {
         UserService.getCurrentUser().then(setUser).catch(console.error);
     }, []);
 
-    if (!user) return <p className="text-gray-500">Loading...</p>;
+    if (!user) return <p className="text-gray-500 text-center">Loading...</p>;
 
     return (
-        <section className="max-w-md mx-auto mt-10 p-6">
-            <div className="flex items-center space-x-4">
-                <div>
-                    <h2 className="text-2xl font-semibold">{user.username}</h2>
-                    <p className="text-gray-500">@{user.pseudo}</p>
-                    <p className="text-gray-400 text-sm">{user.email}</p>
+        <div className="flex flex-col justify-center">
+            <section className="max-w-md mx-auto p-6">
+                <div className="flex items-center space-x-4">
+                    <div>
+                        <h2 className="text-2xl font-semibold">{user.username}</h2>
+                        <p className="text-gray-500">@{user.pseudo}</p>
+                        <p className="text-gray-400 text-sm">{user.email}</p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     );
 }
