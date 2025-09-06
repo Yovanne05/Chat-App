@@ -1,29 +1,35 @@
-import {User} from "@/types/user";
+import {UserDTO} from "@/dto/user.dto";
+import {toUser} from "@/mappers/user.mappers";
+import {UserModel} from "@/models/user.model";
 
-export const getUsers = async (): Promise<User[]> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
-    if (!response.ok) {
-        throw new Error('Failed to fetch users');
+export class UserService {
+    private static apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    public static async getUsers(): Promise<UserModel[]> {
+        const response = await fetch(`${this.apiUrl}/users`);
+        if (!response.ok) throw new Error('Failed to fetch users');
+
+        const data: UserDTO[] = await response.json();
+        return data.map(toUser);
     }
-    return response.json();
-};
 
-export const getFriendsById = async (userId: string): Promise<User[]> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}/friends`);
-    if (!response.ok) {
-        throw new Error('Failed to fetch friends');
+    public static async getFriendsById(userId: string): Promise<UserModel[]> {
+        const response = await fetch(`${this.apiUrl}/users/${userId}/friends`);
+        if (!response.ok) throw new Error('Failed to fetch friends');
+
+        const data: UserDTO[] = await response.json();
+
+        return data.map(toUser);
     }
-    return response.json();
-};
 
+    public static async getCurrentUser(): Promise<UserModel> {
+        const response = await fetch(`${this.apiUrl}/auth/me`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        if (!response.ok) throw new Error("Échec de la récupération de l'utilisateur");
 
-export const getCurrentUser = async (): Promise<User> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
-        method: 'GET',
-        credentials: 'include',
-    });
-
-    if (!response.ok) throw new Error('Échec de la récupération de l\'utilisateur');
-
-    return response.json();
-};
+        const data: UserDTO = await response.json();
+        return toUser(data);
+    }
+}

@@ -1,7 +1,7 @@
 import { LoginData, RegisterData } from "@/types/auth";
-import type {User} from "@/types/user"
+import type {UserModel} from "@/models/user.model"
 
-export const login = async (data: LoginData): Promise<User> => {
+export const login = async (data: LoginData): Promise<UserModel> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -17,7 +17,7 @@ export const login = async (data: LoginData): Promise<User> => {
     return response.json();
 };
 
-export const register = async (data: RegisterData): Promise<User> => {
+export const register = async (data: RegisterData): Promise<UserModel> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

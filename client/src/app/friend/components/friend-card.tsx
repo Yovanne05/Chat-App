@@ -1,7 +1,7 @@
 import { FC } from "react";
-import {User} from "@/types/user";
+import {UserModel} from "@/models/user.model";
 
-const FriendCard: FC<{ user: User }> = ({ user }) => {
+const FriendCard: FC<{ user: UserModel }> = ({ user }) => {
     return (
         <div className="border border-gray-300 rounded-lg p-4 flex items-center mb-4 max-w-sm shadow-md">
             <div className="flex flex-col">

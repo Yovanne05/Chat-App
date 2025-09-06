@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "@/services/userService";
-import type { User } from "@/types/user";
+import { UserService } from "@/services/userService";
+import type { UserModel } from "@/models/user.model";
 
 export default function ProfilComponent() {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserModel | null>(null);
 
     useEffect(() => {
-        getCurrentUser().then(setUser).catch(console.error);
+        UserService.getCurrentUser().then(setUser).catch(console.error);
     }, []);
 
     if (!user) return <p className="text-gray-500">Loading...</p>;

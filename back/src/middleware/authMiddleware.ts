@@ -1,6 +1,6 @@
 // import { RequestHandler } from 'express';
 // import jwt from 'jsonwebtoken';
-// import User, { IUser } from '../models/User';
+// import UserModel, { IUser } from '../models/UserModel';
 //
 // if (!process.env.JWT_SECRET) {
 //     throw new Error("JWT_SECRET n'est pas défini dans .env");
@@ -37,7 +37,7 @@
 //                 res.status(401).json({message: 'Token invalide'});
 //             }
 //
-//             req.user = await User.findById(decoded.id).select('-password');
+//             req.user = await UserModel.findById(decoded.id).select('-password');
 //
 //             if (!req.user) {
 //                 res.status(404).json({message: 'Utilisateur non trouvé'});

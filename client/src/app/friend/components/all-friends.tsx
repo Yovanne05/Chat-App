@@ -1,7 +1,7 @@
 import { FC } from "react";
-import {User} from "@/types/user";
+import {UserModel} from "@/models/user.model";
 
-const UserFriends: FC<{ users: User[] }> = ({ users }) => {
+const UserFriends: FC<{ users: UserModel[] }> = ({ users }) => {
     if (users.length === 0) {
         return <div>Aucun ami trouvé</div>;
     }

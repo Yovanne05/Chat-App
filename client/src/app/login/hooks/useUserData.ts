@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { User } from '@/types/user';
+import { UserModel } from '@/models/user.model';
 import {getAuthToken, removeAuthToken} from "@/utils/auth";
 import {getCurrentUser} from "@/services/userService";
 
 export const useUserData = () => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<UserModel | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
