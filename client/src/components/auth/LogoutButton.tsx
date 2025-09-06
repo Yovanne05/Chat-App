@@ -15,7 +15,7 @@ export function LogoutButton({ className = '' }: { className?: string }) {
     return (
         <button
             onClick={handleLogout}
-            className={`px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition ${className}`}
+            className="px-4 py-2 bg-secondary text-white rounded hover:bg-secondary-dark transition"
             aria-label="Se déconnecter"
         >
             Se déconnecter

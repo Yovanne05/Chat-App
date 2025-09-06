@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User";
-import { addFriend, getAllFriendsById } from "../services/userService";
+import { addFriend, getAllFriendsById } from "../services/UserService";
 
 export const createUser = async (req: Request, res: Response) => {
     try {
