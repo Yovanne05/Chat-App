@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@theme {
+    --color-primary: #121212;
+    --color-primary-dark: #181818;
+    --color-secondary: #9b59b6;
+    --color-secondary-light: #bb86fc;
+    --color-secondary-dark: #20172b;
+    --color-text: #ffffff;
+    --color-text-muted: #b3b3b3;
+    --color-border: #2c2c2c;
+}
+
 body {
     background: linear-gradient(
             135deg,

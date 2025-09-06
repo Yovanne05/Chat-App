@@ -1,5 +1,6 @@
 import { HiOutlineCog, HiOutlineHome, HiOutlineUser } from "react-icons/hi";
 import { CardProps } from "../types/card.type";
+import {LuMessageSquareText} from "react-icons/lu";
 
 export const cardList: CardProps[] = [
   {
@@ -8,9 +9,9 @@ export const cardList: CardProps[] = [
     icon: HiOutlineHome,
   },
   {
-    title: "Profile",
-    route: "/profil",
-    icon: HiOutlineUser,
+    title: "Messages",
+    route: "/messages",
+    icon: LuMessageSquareText,
   },
   {
     title: "Settings",

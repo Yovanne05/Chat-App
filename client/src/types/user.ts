@@ -1,4 +1,4 @@
-export interface User {
+export type User = {
     _id: string;
     username: string;
     pseudo: string;

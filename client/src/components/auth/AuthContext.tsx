@@ -1,12 +1,11 @@
 "use client"
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { removeAuthToken, setAuthToken, isAuthTokenInitialized } from '@/utils/auth';
 
 interface AuthContextType {
     isAuthenticated: boolean;
-    login: (token: string) => void;
-    logout: () => void;
+    login: () => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -15,16 +14,37 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        setIsAuthenticated(isAuthTokenInitialized());
+        const checkAuth = async () => {
+            try {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                if (response.ok) {
+                    setIsAuthenticated(true);
+                } else {
+                    setIsAuthenticated(false);
+                }
+            } catch {
+                setIsAuthenticated(false);
+            }
+        };
+        checkAuth();
     }, []);
 
-    const login = (token: string) => {
-        setAuthToken(token);
-        setIsAuthenticated(true);
+    const login = async () => {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+        setIsAuthenticated(response.ok);
     };
 
-    const logout = () => {
-        removeAuthToken();
+    const logout = async () => {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+            method: 'POST',
+            credentials: 'include',
+        });
         setIsAuthenticated(false);
     };
 

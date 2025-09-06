@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express, { Request, Response } from "express";
+import cookieParser from 'cookie-parser';
 import mongoose from "mongoose";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes";
@@ -14,8 +15,13 @@ console.log("Loaded env:", process.env.JWT_SECRET);
 const app = express();
 
 // TODO : Middleware à faire
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
+
 app.use(express.json());
+app.use(cookieParser());
 
 mongoose.connect("mongodb://localhost:27017/chatDB")
     .then(() => console.log("MongoDB connecté"))

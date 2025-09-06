@@ -12,7 +12,7 @@ export default function SideBar() {
   }
 
   return (
-    <div className="border rounded-lg shadow-md p-4 w-64">
+    <div className="p-4 w-64 bg-primary">
       <CardList CardProps={cardList} />
     </div>
   );

@@ -1,5 +1,4 @@
 import {User} from "@/types/user";
-import {getAuthToken} from "@/utils/auth";
 
 export const getUsers = async (): Promise<User[]> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
@@ -19,17 +18,12 @@ export const getFriendsById = async (userId: string): Promise<User[]> => {
 
 
 export const getCurrentUser = async (): Promise<User> => {
-    const token: string | null = getAuthToken();
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
         method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-        },
+        credentials: 'include',
     });
 
-    if (!response.ok) {
-        throw new Error('Échec de la récupération de l\'utilisateur');
-    }
+    if (!response.ok) throw new Error('Échec de la récupération de l\'utilisateur');
 
     return response.json();
 };

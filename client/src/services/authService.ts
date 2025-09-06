@@ -1,33 +1,45 @@
-import { AuthResponse, LoginData, RegisterData } from "@/types/auth";
+import { LoginData, RegisterData } from "@/types/auth";
+import type {User} from "@/types/user"
 
-export const login = async (data: LoginData): Promise<AuthResponse> => {
+export const login = async (data: LoginData): Promise<User> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
+        credentials: 'include',
     });
 
     if (!response.ok) {
-        throw new Error('Échec de la connexion');
+        const err = await response.json();
+        throw new Error(err.message || 'Échec de la connexion');
     }
 
     return response.json();
 };
 
-export const register = async (data: RegisterData): Promise<AuthResponse> => {
+export const register = async (data: RegisterData): Promise<User> => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
+        credentials: 'include',
     });
 
     if (!response.ok) {
-        throw new Error('Échec de l\'inscription');
+        const err = await response.json();
+        throw new Error(err.message || 'Échec de l\'inscription');
     }
 
     return response.json();
+};
+
+export const logout = async (): Promise<void> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+        method: 'POST',
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        throw new Error('Échec de la déconnexion');
+    }
 };
