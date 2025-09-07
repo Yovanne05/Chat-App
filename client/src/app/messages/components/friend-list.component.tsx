@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import type {UserModel} from "@/models/user.model";
 import {UserService} from "@/services/userService";
+import FriendCardComponent from "@/app/messages/components/friend-card.component";
 
 export default function FriendListComponent() {
     const [friends, setFriends] = useState<UserModel[] | null>(null);
@@ -20,16 +21,15 @@ export default function FriendListComponent() {
             .catch(console.error);
     }, [user]);
     return (
-        <ul>
+        <ul className="w-full">
             {!friends ? (
                 <p className="text-gray-500">Chargement des amis...</p>
             ) : friends.length === 0 ? (
                 <p className="text-gray-400">Aucun ami trouvé.</p>
             ) : (
                 friends.map((friend) => (
-
-                    <li key={friend.id} className="p-2 border-b">
-                        {friend.username} <span className="text-gray-500">@{friend.pseudo}</span>
+                    <li key={friend.id} className="p-2 hover:bg-secondary w-full flex justify-center">
+                        <FriendCardComponent friend={friend} />
                     </li>
                 ))
             )}

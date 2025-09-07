@@ -71,11 +71,19 @@ export const logout: RequestHandler = async (req, res) => {
 export const getMe: RequestHandler = async (req, res, next) => {
     try {
         const token = req.cookies.token;
-        if (!token) res.status(401).json({ message: 'Token manquant' });
+        if (!token) {
+            res.status(401).json({ message: 'Token manquant' });
+            return;
+        }
 
         const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
         const user = await User.findById(decoded.id).select('-password');
-        if (!user) res.status(404).json({ message: 'Utilisateur non trouvé' });
+
+        if (!user) {
+            res.status(404).json({ message: 'Utilisateur non trouvé' });
+            return;
+        }
+
         res.status(200).json(toUserDTO(user));
     } catch (error) {
         next(error);
