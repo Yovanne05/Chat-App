@@ -28,7 +28,7 @@ export default function FriendListComponent() {
                 <p className="text-gray-400">Aucun ami trouvé.</p>
             ) : (
                 friends.map((friend) => (
-                    <li key={friend.id} className="p-2 hover:bg-primary-dark w-full flex justify-center cursor-pointer">
+                    <li key={friend.id} className="flex justify-center cursor-pointer">
                         <FriendCardComponent friend={friend} />
                     </li>
                 ))
