@@ -1,9 +1,10 @@
 import { FC } from 'react';
 import { AuthResponse } from "@/types/auth";
 import { useLoginForm } from "@/app/login/hooks/useLoginForm";
+import {UserModel} from "@/models/user.model";
 
 interface LoginFormProps {
-    onSuccess: (data: AuthResponse) => void;
+    onSuccess: (data: UserModel) => void;
     onError?: (error: Error) => void;
 }
 

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { AuthResponse } from "@/types/auth";
 import { login } from "@/services/authService";
+import {UserModel} from "@/models/user.model";
 
 interface UseLoginFormProps {
-    onSuccess: (data: AuthResponse) => void;
+    onSuccess: (data: UserModel) => void;
     onError?: (error: Error) => void;
 }
 

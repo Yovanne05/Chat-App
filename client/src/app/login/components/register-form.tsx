@@ -1,9 +1,9 @@
 import { FC } from 'react';
-import { AuthResponse } from "@/types/auth";
 import { useRegisterForm } from "@/app/login/hooks/useRegisterForm";
+import {UserModel} from "@/models/user.model";
 
 interface RegisterFormProps {
-    onSuccess: (data: AuthResponse) => void;
+    onSuccess: (data: UserModel) => void;
     onError?: (error: Error) => void;
 }
 
