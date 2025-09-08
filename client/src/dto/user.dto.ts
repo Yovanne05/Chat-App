@@ -1,4 +1,4 @@
-export interface UserDTO {
+export type UserDTO = {
     id: string;
     username: string;
     pseudo: string;

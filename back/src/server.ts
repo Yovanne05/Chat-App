@@ -8,10 +8,12 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import messageRoutes from "./routes/messageRoutes";
+import http from "http";
+import {setupWebSocket} from "./sockets/socket";
+
 
 dotenv.config();
 
-console.log("Loaded env:", process.env.JWT_SECRET);
 const app = express();
 
 // TODO : Middleware à faire
@@ -19,6 +21,9 @@ app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true,
 }));
+
+const server = http.createServer(app);
+const io = setupWebSocket(server);
 
 app.use(express.json());
 app.use(cookieParser());
