@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useConversation } from "@/hooks/useConversation";
 import {useMessages} from "@/hooks/useMessage";
@@ -19,25 +19,43 @@ export default function MessagePage() {
     const { friend, currentUser, isLoading: isConversationLoading, error: conversationError } = useConversation(friendId);
     const { messages, isLoading: isMessagesLoading, loadMessages, addMessage } = useMessages(currentUser?.id || null, friendId);
 
-    const handleMessageReceived = (message: MessageDTO) => {
+    const handleMessageReceived = useCallback((message: MessageDTO) => {
         addMessage(message);
-    };
+    }, [addMessage]);
 
-    const { sendMessage, isConnected } = useWebSocket({
+    const { sendMessage, joinConversation, isConnected } = useWebSocket({
         userId: currentUser?.id || null,
         onMessageReceived: handleMessageReceived,
         onError: (error) => console.error(error)
     });
 
+    // Charger les messages au montage
     useEffect(() => {
         if (currentUser) {
             loadMessages();
         }
     }, [currentUser, loadMessages]);
 
+    // Rejoindre la conversation quand le socket est connecté
+    useEffect(() => {
+        if (isConnected && currentUser && friendId) {
+            console.log("🚀 Rejoindre la conversation avec:", friendId);
+            joinConversation(friendId);
+        }
+
+        // Cleanup: quitter la conversation au démontage
+        return () => {
+            if (isConnected && currentUser && friendId) {
+                console.log("🔚 Nettoyage: quitter la conversation");
+            }
+        };
+    }, [isConnected, currentUser, friendId, joinConversation]);
+
     const handleSendMessage = (content: string) => {
-        if (currentUser) {
+        if (currentUser && isConnected) {
             sendMessage(friendId, content);
+        } else {
+            console.error("❌ Impossible d'envoyer: utilisateur ou connexion manquante");
         }
     };
 

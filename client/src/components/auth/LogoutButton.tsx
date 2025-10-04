@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import {useAuth} from "@/components/auth/AuthContext";
 
-export function LogoutButton({ className = '' }: { className?: string }) {
+export function LogoutButton({ }: { className?: string }) {
     const router = useRouter()
     const { logout } = useAuth()
 

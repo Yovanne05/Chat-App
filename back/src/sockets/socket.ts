@@ -15,13 +15,11 @@ export const setupWebSocket = (server: HttpServer) => {
 
     // Gestion des connexions
     io.on("connection", (socket) => {
-        console.log("Utilisateur connecté:", socket.id);
 
         // Rejoindre une room pour les conversations privées
         socket.on("join_conversation", (data: { userId: string; friendId: string }) => {
             const roomId = [data.userId, data.friendId].sort().join("-");
             socket.join(roomId);
-            console.log(`Utilisateur ${data.userId} a rejoint la room: ${roomId}`);
         });
 
         // Quitter une conversation
@@ -58,11 +56,6 @@ export const setupWebSocket = (server: HttpServer) => {
             } catch (error) {
                 socket.emit("message_error", { error: "Erreur lors de l'envoi du message" });
             }
-        });
-
-        // Déconnexion
-        socket.on("disconnect", () => {
-            console.log("Utilisateur déconnecté:", socket.id);
         });
     });
 

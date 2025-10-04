@@ -37,6 +37,6 @@ app.use("/messages", messageRoutes);
 app.use('/auth', authRoutes);
 
 const PORT = 5000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Serveur lancé sur http://localhost:${PORT}`);
 });
