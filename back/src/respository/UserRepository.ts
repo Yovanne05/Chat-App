@@ -4,14 +4,15 @@ import { Types } from "mongoose";
 
 export class UserRepository {
     
-  static async findById(id: string): Promise<IUser | null> {
-    try {
-      return await User.findById(id);
-    } catch (error) {
-      console.error("Error in findById:", error);
-      return null;
-    }
+  static async findByUsername(username: string): Promise<IUser | null> {
+  try {
+    const user = await User.findOne({ username });
+    return user;
+  } catch (error) {
+    console.error("Error in findByUsername:", error);
+    return null;
   }
+}
 
   static async findFriendsById(id: string): Promise<IUser[] | null> {
     try {
@@ -26,11 +27,11 @@ export class UserRepository {
 
   static async addFriend(
     idUser: string,
-    idNewFriend: string
+    friendUsername: string
   ): Promise<boolean> {
     try {
       const user = await User.findById(idUser);
-      const newFriend = await User.findById(idNewFriend);
+      const newFriend = await UserRepository.findByUsername(friendUsername);
 
       if (!user || !newFriend) return false;
 

@@ -26,7 +26,7 @@ export const getAllUsers = async (req: Request, res: Response) => {
 export const deleteAllUsers = async (req: Request, res: Response) => {
     try {
         await User.deleteMany({});
-        res.json({ message: "Tous les utilisateurs ont été supprimés" });
+        res.json("");
     } catch (err: any) {
         res.status(500).json({ error: err.message });
     }
@@ -38,9 +38,7 @@ export const getFriends = async (req: Request, res: Response) => {
         const friends = await UserService.getFriends(userId);
 
         if (!friends) {
-            res.status(404).json({ error: "Utilisateur non trouvé" });
-        } else if (friends.length === 0) {
-            res.status(404).json({ error: "Aucun ami trouvé" });
+            res.status(404).json("");
         } else {
             const friendsDTO = friends.map(toUserDTO);
             res.status(200).json(friendsDTO);
@@ -52,11 +50,11 @@ export const getFriends = async (req: Request, res: Response) => {
 
 
 export const addFriendToUser = async (req: Request, res: Response) => {
-    const { idUser, idNewFriend } = req.params;
-    try {
-        await UserService.addFriend(idUser, idNewFriend);
-        res.status(200).json({ message: "Ami ajouté avec succès" });
-    } catch (err: any) {
-        res.status(500).json({ error: err.message });
-    }
+  const { idUser, friendUsername } = req.params;
+  try {
+    await UserService.addFriend(idUser, friendUsername);
+    res.status(200).json("");
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
 };

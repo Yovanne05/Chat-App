@@ -6,8 +6,8 @@ export class UserService {
         return await UserRepository.findFriendsById(userId);
     }
 
-    static async addFriend(userId: string, friendId: string): Promise<boolean> {
-        return await UserRepository.addFriend(userId, friendId);
+    static async addFriend(userId: string, friendUsername: string): Promise<boolean> {
+        return await UserRepository.addFriend(userId, friendUsername);
     }
 
     static async removeFriend(userId: string, friendId: string): Promise<boolean> {

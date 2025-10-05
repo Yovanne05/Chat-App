@@ -12,7 +12,7 @@ import {MessageInput} from "@/app/messages/[id]/components/message-input.compone
 import {LoadingSpinner} from "@/app/messages/[id]/components/loading-spinner.component";
 
 
-export default function MessagePage() {
+export default function ConversationPage() {
     const params = useParams();
     const friendId = params.id as string;
 
@@ -29,26 +29,16 @@ export default function MessagePage() {
         onError: (error) => console.error(error)
     });
 
-    // Charger les messages au montage
     useEffect(() => {
         if (currentUser) {
             loadMessages();
         }
     }, [currentUser, loadMessages]);
 
-    // Rejoindre la conversation quand le socket est connecté
     useEffect(() => {
         if (isConnected && currentUser && friendId) {
-            console.log("🚀 Rejoindre la conversation avec:", friendId);
             joinConversation(friendId);
         }
-
-        // Cleanup: quitter la conversation au démontage
-        return () => {
-            if (isConnected && currentUser && friendId) {
-                console.log("🔚 Nettoyage: quitter la conversation");
-            }
-        };
     }, [isConnected, currentUser, friendId, joinConversation]);
 
     const handleSendMessage = (content: string) => {

@@ -26,7 +26,7 @@ export const getMessageById = async (req: Request, res: Response): Promise<void>
         const message = await messageService.getMessageById(id);
 
         if (!message) {
-            res.status(404).json({ error: "Message non trouvé" });
+            res.status(404).json("");
             return;
         }
 
@@ -62,7 +62,7 @@ export const deleteMessage = async (req: Request, res: Response): Promise<void> 
             return;
         }
 
-        res.status(200).json({ message: "Message supprimé avec succès", deleted: toMessageDTO(deleted) });
+        res.status(200).json("");
     } catch (err: any) {
         res.status(500).json({ error: err.message });
     }

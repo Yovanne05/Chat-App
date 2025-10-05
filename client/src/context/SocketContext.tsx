@@ -13,10 +13,6 @@ export const SocketProvider = ({ children }: { children: React.ReactNode }) => {
       transports: ["websocket"],
     });
     socketRef.current = socket;
-
-    socket.on("connect", () => console.log("✅ WebSocket connecté:", socket.id));
-    socket.on("disconnect", () => console.log("❌ WebSocket déconnecté"));
-
     return () => {
       socket.disconnect();
     };
