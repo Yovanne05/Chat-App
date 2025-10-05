@@ -1,18 +1,18 @@
-import express from 'express';
 import {
-    createUser,
-    getAllUsers,
-    deleteAllUsers,
-    getFriends,
-    addFriendToUser
-} from '../controllers/userController';
+  createUser,
+  getAllUsers,
+  deleteAllUsers,
+  getFriends,
+  addFriendToUser
+} from "../controllers/userController";
+import { RouterBuilder } from "../utils/RouterBuilder";
 
-const router = express.Router();
-
-router.post('/', createUser);
-router.get('/', getAllUsers);
-router.delete('/', deleteAllUsers);
-router.get('/:id/friends', getFriends);
-router.post('/:idUser/friends/:idNewFriend', addFriendToUser);
+const router = new RouterBuilder()
+  .post("/", createUser)
+  .get("/", getAllUsers)
+  .delete("/", deleteAllUsers)
+  .get("/:id/friends", getFriends)
+  .post("/:idUser/friends/:idNewFriend", addFriendToUser)
+  .build();
 
 export default router;

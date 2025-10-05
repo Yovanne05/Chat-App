@@ -1,11 +1,11 @@
-import express from 'express';
-import {register, login, getMe, logout} from '../controllers/authController';
+import { register, login, getMe, logout } from "../controllers/authController";
+import { RouterBuilder } from "../utils/RouterBuilder";
 
-const router = express.Router();
-
-router.post('/register', register);
-router.post('/login', login);
-router.post('/logout', logout);
-router.get('/me', getMe);
+const router = new RouterBuilder()
+  .post("/register", register)
+  .post("/login", login)
+  .post("/logout", logout)
+  .get("/me", getMe)
+  .build();
 
 export default router;

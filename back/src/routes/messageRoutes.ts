@@ -1,11 +1,16 @@
-import { Router } from "express";
-import { createMessage, getMessageById, getConversation, deleteMessage } from "../controllers/messageController";
+import {
+  createMessage,
+  getMessageById,
+  getConversation,
+  deleteMessage,
+} from "../controllers/messageController";
+import { RouterBuilder } from "../utils/RouterBuilder";
 
-const router = Router();
-
-router.post("/", createMessage);
-router.get("/:id", getMessageById);
-router.get("/conversation/:user1/:user2", getConversation);
-router.delete("/:id", deleteMessage);
+const router = new RouterBuilder()
+  .post("/", createMessage)
+  .get("/:id", getMessageById)
+  .get("/conversation/:user1/:user2", getConversation)
+  .delete("/:id", deleteMessage)
+  .build();
 
 export default router;

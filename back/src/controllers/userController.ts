@@ -1,60 +1,34 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import { UserService } from "../services/UserService";
-import {toUserDTO} from "../dto/user.dto";
+import { toUserDTO } from "../dto/user.dto";
 
 export const createUser = async (req: Request, res: Response) => {
-    try {
-        const user = await User.create(req.body);
-        const userDTO = toUserDTO(user);
-        res.status(201).json(userDTO);
-    } catch (err: any) {
-        res.status(400).json({ error: err.message });
-    }
+  const user = await User.create(req.body);
+  const userDTO = toUserDTO(user);
+  res.status(201).json(userDTO);
 };
 
 export const getAllUsers = async (req: Request, res: Response) => {
-    try {
-        const users = await User.find();
-        const usersDTO = users.map(toUserDTO);
-        res.status(200).json(usersDTO);
-    } catch (err: any) {
-        res.status(500).json({ error: err.message });
-    }
+  const users = await User.find();
+  const usersDTO = users.map(toUserDTO);
+  res.status(200).json(usersDTO);
 };
 
 export const deleteAllUsers = async (req: Request, res: Response) => {
-    try {
-        await User.deleteMany({});
-        res.json("");
-    } catch (err: any) {
-        res.status(500).json({ error: err.message });
-    }
+  await User.deleteMany({});
+  res.json("");
 };
 
 export const getFriends = async (req: Request, res: Response) => {
-    const userId = req.params.id;
-    try {
-        const friends = await UserService.getFriends(userId);
-
-        if (!friends) {
-            res.status(404).json("");
-        } else {
-            const friendsDTO = friends.map(toUserDTO);
-            res.status(200).json(friendsDTO);
-        }
-    } catch (err: any) {
-        res.status(500).json({ error: err.message });
-    }
+  const userId = req.params.id;
+  const friends = await UserService.getFriends(userId);
+  const friendsDTO = friends?.map(toUserDTO);
+  res.status(200).json(friendsDTO);
 };
-
 
 export const addFriendToUser = async (req: Request, res: Response) => {
   const { idUser, friendUsername } = req.params;
-  try {
-    await UserService.addFriend(idUser, friendUsername);
-    res.status(200).json("");
-  } catch (err: any) {
-    res.status(500).json({ error: err.message });
-  }
+  await UserService.addFriend(idUser, friendUsername);
+  res.status(200).json("");
 };

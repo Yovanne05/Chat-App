@@ -17,7 +17,7 @@ export class MessageService {
         });
     }
 
-    async getMessageById(id: string): Promise<IMessage | null> {
+    async getMessageById(id: string): Promise<IMessage> {
         return await this.messageRepository.findById(id);
     }
 
@@ -25,7 +25,7 @@ export class MessageService {
         return await this.messageRepository.findConversation(userId1, userId2);
     }
 
-    async deleteMessage(id: string): Promise<IMessage | null> {
+    async deleteMessage(id: string): Promise<IMessage> {
         return await this.messageRepository.deleteById(id);
     }
 }
