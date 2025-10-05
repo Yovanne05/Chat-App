@@ -1,28 +1,27 @@
 import { Request, Response } from "express";
-import User from "../models/User";
 import { UserService } from "../services/UserService";
 import { toUserDTO } from "../dto/user.dto";
 
-export const createUser = async (req: Request, res: Response) => {
-  const user = await User.create(req.body);
+export const create = async (req: Request, res: Response) => {
+  const user = await UserService.createUser(req.body);
   const userDTO = toUserDTO(user);
   res.status(201).json(userDTO);
 };
 
-export const getAllUsers = async (req: Request, res: Response) => {
-  const users = await User.find();
+export const findAll = async (req: Request, res: Response) => {
+  const users = await UserService.findAll();
   const usersDTO = users.map(toUserDTO);
   res.status(200).json(usersDTO);
 };
 
-export const deleteAllUsers = async (req: Request, res: Response) => {
-  await User.deleteMany({});
+export const deleteMany = async (req: Request, res: Response) => {
+  await UserService.deleteAll();
   res.json("");
 };
 
-export const getFriends = async (req: Request, res: Response) => {
+export const findFriends = async (req: Request, res: Response) => {
   const userId = req.params.id;
-  const friends = await UserService.getFriends(userId);
+  const friends = await UserService.findFriends(userId);
   const friendsDTO = friends?.map(toUserDTO);
   res.status(200).json(friendsDTO);
 };

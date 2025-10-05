@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Error as MongooseError } from "mongoose";
 
-const GENERIC_MESSAGE =
-  "Une erreur est survenue. Merci de réessayer plus tard.";
+const GENERIC_MESSAGE = "Une erreur est survenue. Merci de réessayer plus tard.";
 
 export class AppError extends Error {
   statusCode: number;

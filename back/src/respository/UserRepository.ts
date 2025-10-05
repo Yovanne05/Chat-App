@@ -2,26 +2,31 @@ import {
   UserNotFoundException,
   FriendshipActionException,
 } from "../exceptions/user.exceptions";
-import User from "../models/User";
-import { IUser } from "../models/User";
+import User, { IUser } from "../models/User";
 import { Types } from "mongoose";
 
-
 export class UserRepository {
+  static async create(data: Partial<IUser>): Promise<IUser> {
+    return await User.create(data);
+  }
+
+  static async findAll(): Promise<IUser[]> {
+    return await User.find();
+  }
+
+  static async deleteAll(): Promise<void> {
+    await User.deleteMany({});
+  }
+
   static async findByUsername(username: string): Promise<IUser> {
     const user = await User.findOne({ username });
-    if (!user) {
-      throw new UserNotFoundException(username);
-    }
+    if (!user) throw new UserNotFoundException(username);
     return user;
   }
 
-  static async findFriendsById(id: string): Promise<IUser[]> {
+  static async findFriends(id: string): Promise<IUser[]> {
     const user = await User.findById(id).populate("friends");
-    if (!user) {
-      throw new UserNotFoundException(id);
-    }
-
+    if (!user) throw new UserNotFoundException(id);
     return user.friends as IUser[];
   }
 
@@ -30,7 +35,7 @@ export class UserRepository {
     friendUsername: string
   ): Promise<boolean> {
     const user = await User.findById(idUser);
-    const newFriend = await UserRepository.findByUsername(friendUsername);
+    const newFriend = await this.findByUsername(friendUsername);
 
     if (!user || !newFriend) {
       throw new UserNotFoundException(user ? friendUsername : idUser);

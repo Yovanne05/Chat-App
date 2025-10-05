@@ -39,6 +39,7 @@ export const login: RequestHandler = async (req, res, next) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) res.status(404).json({ message: 'Utilisateur non trouvé' });
+        // TODO : à remettre
         // const isMatch = await bcrypt.compare(password, user.password);
         // if (!isMatch) res.status(400).json({ message: 'Identifiants invalides' });
 

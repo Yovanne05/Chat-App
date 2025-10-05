@@ -1,16 +1,16 @@
 import {
-  createMessage,
-  getMessageById,
-  getConversation,
-  deleteMessage,
+  create,
+  findOne,
+  findConversation,
+  deleteOneMessage,
 } from "../controllers/messageController";
 import { RouterBuilder } from "../utils/RouterBuilder";
 
 const router = new RouterBuilder()
-  .post("/", createMessage)
-  .get("/:id", getMessageById)
-  .get("/conversation/:user1/:user2", getConversation)
-  .delete("/:id", deleteMessage)
+  .post("/", create)
+  .get("/:id", findOne)
+  .get("/conversation/:user1/:user2", findConversation)
+  .delete("/:id", deleteOneMessage)
   .build();
 
 export default router;
