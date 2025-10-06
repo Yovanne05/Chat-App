@@ -14,7 +14,7 @@ export const useConversation = (friendId: string) => {
                 setIsLoading(true);
                 setError(null);
 
-                const [user, users] = await Promise.all([
+                const [user, { users }] = await Promise.all([
                     UserService.getCurrentUser(),
                     UserService.getUsers()
                 ]);

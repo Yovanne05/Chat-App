@@ -31,13 +31,11 @@ export const setupWebSocket = (server: HttpServer) => {
             message: string;
         }) => {
             try {
-                const newMessage = await messageService.sendMessage(
+                const messageDTO = await messageService.sendMessage(
                     data.senderId,
                     data.receiverId,
                     data.message
                 );
-
-                const messageDTO = toMessageDTO(newMessage);
 
                 const roomId = [data.senderId, data.receiverId].sort().join("-");
 

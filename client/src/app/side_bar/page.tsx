@@ -2,7 +2,7 @@
 
 import CardList from "./components/card-list.component";
 import { cardList } from "./data/card-list.data";
-import { useAuth } from "@/components/auth/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 
 export default function SideBarPage() {

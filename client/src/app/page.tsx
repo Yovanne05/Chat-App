@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuth } from "@/components/auth/AuthContext";
+import { useAuth } from "@/context/AuthContext";
 import LoginPage from "@/app/login/page";
 
 export default function ProtectedLayout({

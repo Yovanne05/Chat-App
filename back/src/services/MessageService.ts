@@ -1,31 +1,47 @@
-import { MessageRepository } from "../respository/MessageRepository";
+import {
+  MessageRepository,
+  MessageSearchParams,
+} from "../repository/MessageRepository";
 import mongoose from "mongoose";
-import { IMessage } from "../models/Message";
+import { toMessageDTO, MessageDTO } from "../dto/message.dto";
 
 export class MessageService {
-    private messageRepository: MessageRepository;
+  async findMany(
+    params: Partial<MessageSearchParams> = {}
+  ): Promise<{ messages: MessageDTO[]; total: number }> {
+    const { messages, total } = await MessageRepository.findMany(params);
+    const messagesDto = messages.map(toMessageDTO);
+    return { messages: messagesDto, total };
+  }
 
-    constructor() {
-        this.messageRepository = new MessageRepository();
-    }
+  async sendMessage(
+    senderId: string,
+    receiverId: string,
+    message: string
+  ): Promise<MessageDTO> {
+    const msg = await MessageRepository.create({
+      sender: new mongoose.Types.ObjectId(senderId),
+      receiver: new mongoose.Types.ObjectId(receiverId),
+      message,
+    });
+    return toMessageDTO(msg);
+  }
 
-    async sendMessage(senderId: string, receiverId: string, message: string): Promise<IMessage> {
-        return await this.messageRepository.create({
-            sender: new mongoose.Types.ObjectId(senderId),
-            receiver: new mongoose.Types.ObjectId(receiverId),
-            message,
-        });
-    }
+  async getMessageById(id: string): Promise<MessageDTO> {
+    const msg = await MessageRepository.findById(id);
+    return toMessageDTO(msg);
+  }
 
-    async getMessageById(id: string): Promise<IMessage> {
-        return await this.messageRepository.findById(id);
-    }
+  async getConversation(
+    userId1: string,
+    userId2: string
+  ): Promise<MessageDTO[]> {
+    const messages = await MessageRepository.findConversation(userId1, userId2);
+    return messages.map(toMessageDTO);
+  }
 
-    async getConversation(userId1: string, userId2: string): Promise<IMessage[]> {
-        return await this.messageRepository.findConversation(userId1, userId2);
-    }
-
-    async deleteMessage(id: string): Promise<IMessage> {
-        return await this.messageRepository.deleteById(id);
-    }
+  async deleteMessage(id: string): Promise<boolean> {
+    const deleted = await MessageRepository.deleteById(id);
+    return !!deleted;
+  }
 }

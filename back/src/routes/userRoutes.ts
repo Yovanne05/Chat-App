@@ -1,6 +1,6 @@
 import {
   create,
-  findAll,
+  findMany,
   deleteMany,
   findFriends,
   addFriendToUser
@@ -9,7 +9,7 @@ import { RouterBuilder } from "../utils/RouterBuilder";
 
 const router = new RouterBuilder()
   .post("/", create)
-  .get("/", findAll)
+  .get("/", findMany)
   .delete("/", deleteMany)
   .get("/:id/friends", findFriends)
   .post("/:idUser/friends/:idNewFriend", addFriendToUser)

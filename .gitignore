@@ -45,4 +45,6 @@ client/.next
 client/next-env.d.ts
 client/tsconfig.tsbuildinfo
 
+back/logs
+
 .*

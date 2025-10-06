@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from "next/navigation";
 import LoginForm from "@/app/login/components/login-form";
 import RegisterForm from "@/app/login/components/register-form";
-import {useAuth} from "@/components/auth/AuthContext";
+import {useAuth} from "@/context/AuthContext";
 
 export default function LoginPage() {
     const [isLogin, setIsLogin] = useState(true);
