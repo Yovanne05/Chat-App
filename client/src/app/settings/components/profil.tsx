@@ -8,7 +8,7 @@ export default function ProfilComponent() {
     const [user, setUser] = useState<UserModel | null>(null);
 
     useEffect(() => {
-        UserService.getCurrentUser().then(setUser).catch(console.error);
+        UserService.findCurrentUser().then(setUser).catch(console.error);
     }, []);
 
     if (!user) return <p className="text-gray-500 text-center">Loading...</p>;

@@ -15,8 +15,8 @@ export const useConversation = (friendId: string) => {
                 setError(null);
 
                 const [user, { users }] = await Promise.all([
-                    UserService.getCurrentUser(),
-                    UserService.getUsers()
+                    UserService.findCurrentUser(),
+                    UserService.findMany()
                 ]);
 
                 setCurrentUser(user);

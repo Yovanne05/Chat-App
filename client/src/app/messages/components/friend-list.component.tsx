@@ -11,12 +11,12 @@ export default function FriendListComponent() {
 
 
     useEffect(() => {
-        UserService.getCurrentUser().then(setUser).catch(console.error);
+        UserService.findCurrentUser().then(setUser).catch(console.error);
     }, []);
 
     useEffect(() => {
         if (!user?.id) return;
-        UserService.getFriendsById(user.id)
+        UserService.findFriends(user.id)
             .then(setFriends)
             .catch(console.error);
     }, [user]);
