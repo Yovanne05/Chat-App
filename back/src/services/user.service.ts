@@ -1,5 +1,5 @@
-import { IUser } from "../models/User";
-import { UserRepository, UserSearchParams } from "../repository/UserRepository";
+import { IUser } from "../models/user.model";
+import { UserRepository, UserSearchParams } from "../repository/user.repository";
 import { toUserDTO, UserDTO } from "../dto/user.dto";
 
 export class UserService {

@@ -1,7 +1,7 @@
 import {
   MessageRepository,
   MessageSearchParams,
-} from "../repository/MessageRepository";
+} from "../repository/message.repository";
 import mongoose from "mongoose";
 import { toMessageDTO, MessageDTO } from "../dto/message.dto";
 

@@ -1,6 +1,6 @@
 import { Server as SocketIOServer } from "socket.io";
 import { Server as HttpServer } from "http";
-import {MessageService} from "../services/MessageService";
+import {MessageService} from "../services/message.service";
 import {toMessageDTO} from "../dto/message.dto";
 
 const messageService = new MessageService();

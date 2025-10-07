@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { UserService } from "@/services/userService";
 import { UserModel } from "@/models/user.model";
+import { getMe } from "@/services/authService";
 
 export const useConversation = (friendId: string) => {
     const [friend, setFriend] = useState<UserModel | null>(null);
@@ -15,7 +16,7 @@ export const useConversation = (friendId: string) => {
                 setError(null);
 
                 const [user, { users }] = await Promise.all([
-                    UserService.findCurrentUser(),
+                    getMe(),
                     UserService.findMany()
                 ]);
 

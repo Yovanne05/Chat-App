@@ -1,4 +1,4 @@
-import User, { IUser } from "../models/User";
+import User, { IUser } from "../models/user.model";
 import { UserNotFoundException } from "../exceptions/user.exceptions";
 import { FilterQuery, SortOrder } from "mongoose";
 

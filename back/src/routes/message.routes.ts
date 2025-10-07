@@ -3,7 +3,7 @@ import {
   findOne,
   findConversation,
   deleteOneMessage,
-} from "../controllers/messageController";
+} from "../controllers/message.controller";
 import { RouterBuilder } from "../utils/RouterBuilder";
 
 const router = new RouterBuilder()

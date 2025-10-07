@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { MessageService } from "../services/MessageService";
+import { MessageService } from "../services/message.service";
 
 const messageService = new MessageService();
 

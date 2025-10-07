@@ -1,4 +1,4 @@
-import {IMessage} from "../models/Message";
+import {IMessage} from "../models/message.model";
 import mongoose from "mongoose";
 
 export type MessageDTO = {

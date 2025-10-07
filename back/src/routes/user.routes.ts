@@ -4,7 +4,7 @@ import {
   deleteMany,
   findFriends,
   addFriendToUser
-} from "../controllers/userController";
+} from "../controllers/user.controller";
 import { RouterBuilder } from "../utils/RouterBuilder";
 
 const router = new RouterBuilder()

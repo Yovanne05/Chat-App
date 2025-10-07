@@ -3,6 +3,7 @@
 import {useEffect, useState} from "react";
 import type {UserModel} from "@/models/user.model";
 import {UserService} from "@/services/userService";
+import { getMe } from "@/services/authService";
 import FriendCardComponent from "@/app/messages/components/friend-card.component";
 
 export default function FriendListComponent() {
@@ -11,7 +12,7 @@ export default function FriendListComponent() {
 
 
     useEffect(() => {
-        UserService.findCurrentUser().then(setUser).catch(console.error);
+        getMe().then(setUser).catch(console.error);
     }, []);
 
     useEffect(() => {

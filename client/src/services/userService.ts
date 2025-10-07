@@ -51,15 +51,4 @@ export class UserService {
     const data: UserDTO[] = await response.json();
     return data.map(toUser);
   }
-
-  public static async findCurrentUser(): Promise<UserModel> {
-    const response = await fetch(`${this.apiUrl}/auth/me`, {
-      method: "GET",
-      credentials: "include",
-    });
-    if (!response.ok)
-      throw new Error("Échec de la récupération de l'utilisateur");
-    const data: UserDTO = await response.json();
-    return toUser(data);
-  }
 }

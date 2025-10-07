@@ -1,64 +1,83 @@
-"use client"
+"use client";
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { LoginData } from "@/types/auth";
+import type { UserModel } from "@/models/user.model";
+import * as authService from "@/services/authService";
 
 interface AuthContextType {
-    isAuthenticated: boolean;
-    login: () => Promise<void>;
-    logout: () => Promise<void>;
+  user: UserModel | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  login: (data: LoginData) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [user, setUser] = useState<UserModel | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                if (response.ok) {
-                    setIsAuthenticated(true);
-                } else {
-                    setIsAuthenticated(false);
-                }
-            } catch {
-                setIsAuthenticated(false);
-            }
-        };
-        checkAuth();
-    }, []);
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("token");
 
-    const login = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
-            method: 'GET',
-            credentials: 'include',
-        });
-        setIsAuthenticated(response.ok);
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const currentUser = await authService.getMe();
+        setUser(currentUser);
+      } catch (error) {
+        localStorage.removeItem("token");
+        setUser(null);
+        console.error(error)
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    const logout = async () => {
-        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
-            method: 'POST',
-            credentials: 'include',
-        });
-        setIsAuthenticated(false);
-    };
+    checkAuth();
+  }, []);
 
-    return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  const login = async (data: LoginData) => {
+    try {
+      const loggedUser = await authService.login(data);
+      setUser(loggedUser);
+    } catch (error) {
+      setUser(null);
+      throw error; // Propager l'erreur pour que le composant puisse la gérer
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } finally {
+      setUser(null);
+    }
+  };
+
+  const value = {
+    user,
+    isAuthenticated: !!user,
+    isLoading,
+    login,
+    logout,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };

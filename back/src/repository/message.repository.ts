@@ -1,5 +1,5 @@
 import { MessageNotFoundException } from "../exceptions/message.exception";
-import MessageModel, { IMessage } from "../models/Message";
+import MessageModel, { IMessage } from "../models/message.model";
 import { FilterQuery, SortOrder } from "mongoose";
 
 export interface MessageSearchParams {

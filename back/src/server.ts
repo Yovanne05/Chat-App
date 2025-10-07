@@ -5,9 +5,9 @@ import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import cors from "cors";
-import authRoutes from "./routes/authRoutes";
-import userRoutes from "./routes/userRoutes";
-import messageRoutes from "./routes/messageRoutes";
+import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
+import messageRoutes from "./routes/message.routes";
 import http from "http";
 import { setupWebSocket } from "./sockets/socket";
 import { errorHandler, notFoundHandler } from "./utils/errorHandler";
@@ -24,6 +24,7 @@ app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 

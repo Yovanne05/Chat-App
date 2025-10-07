@@ -1,45 +1,30 @@
 import { LoginData, RegisterData } from "@/types/auth";
-import type {UserModel} from "@/models/user.model"
+import type { UserModel } from "@/models/user.model";
+import { apiClient } from "./apiClient";
+
+interface AuthResponse {
+  user: UserModel;
+  token: string;
+}
 
 export const login = async (data: LoginData): Promise<UserModel> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-        credentials: 'include',
-    });
-
-    if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.message || 'Échec de la connexion');
-    }
-
-    return response.json();
+  const result = await apiClient.post<AuthResponse>("/auth/login", data);
+  localStorage.setItem("token", result.token);
+  return result.user;
 };
 
 export const register = async (data: RegisterData): Promise<UserModel> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-        credentials: 'include',
-    });
-
-    if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.message || 'Échec de l\'inscription');
-    }
-
-    return response.json();
+  const result = await apiClient.post<AuthResponse>("/auth/register", data);
+  localStorage.setItem("token", result.token);
+  return result.user;
 };
 
 export const logout = async (): Promise<void> => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
-        method: 'POST',
-        credentials: 'include',
-    });
+  localStorage.removeItem("token");
+};
 
-    if (!response.ok) {
-        throw new Error('Échec de la déconnexion');
-    }
+export const getMe = async (): Promise<UserModel> => {
+  const token = localStorage.getItem("token");
+  if (!token) throw new Error("Token manquant");
+  return apiClient.get<UserModel>("/auth/me");
 };
