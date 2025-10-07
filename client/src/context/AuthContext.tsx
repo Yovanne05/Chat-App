@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { LoginData } from "@/types/auth";
 import type { UserModel } from "@/models/user.model";
-import * as authService from "@/services/authService";
+import * as authService from "@/services/auth.service";
 
 interface AuthContextType {
   user: UserModel | null;
@@ -51,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       setUser(loggedUser);
     } catch (error) {
       setUser(null);
-      throw error; // Propager l'erreur pour que le composant puisse la gérer
+      throw error;
     }
   };
 

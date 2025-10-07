@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AuthResponse } from "@/types/auth";
-import { login } from "@/services/authService";
+import { login } from "@/services/auth.service";
 import {UserModel} from "@/models/user.model";
 
 interface UseLoginFormProps {

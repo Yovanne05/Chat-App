@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { register } from "@/services/authService";
+import { register } from "@/services/auth.service";
 import {UserModel} from "@/models/user.model";
 
 interface UseRegisterFormProps {

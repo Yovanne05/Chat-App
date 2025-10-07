@@ -4,7 +4,7 @@ import {
   findConversation,
   deleteOneMessage,
 } from "../controllers/message.controller";
-import { RouterBuilder } from "../utils/RouterBuilder";
+import { RouterBuilder } from "../utils/router-builder";
 
 const router = new RouterBuilder()
   .post("/", create)

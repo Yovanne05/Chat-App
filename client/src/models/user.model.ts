@@ -3,5 +3,5 @@ export type UserModel = {
     username: string;
     pseudo: string;
     email: string;
-    friends: { id: string; username: string }[];
+    friends: { id: string }[];
 };

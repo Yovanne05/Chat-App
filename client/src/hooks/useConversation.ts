@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { UserService } from "@/services/userService";
+import { UserService } from "@/services/user.service";
 import { UserModel } from "@/models/user.model";
-import { getMe } from "@/services/authService";
+import { getMe } from "@/services/auth.service";
 
 export const useConversation = (friendId: string) => {
     const [friend, setFriend] = useState<UserModel | null>(null);

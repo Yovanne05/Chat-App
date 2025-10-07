@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { UserService } from "@/services/userService";
+import { UserService } from "@/services/user.service";
 import { UserModel } from "@/models/user.model";
 
 export default function SearchUser() {

@@ -10,7 +10,7 @@ import userRoutes from "./routes/user.routes";
 import messageRoutes from "./routes/message.routes";
 import http from "http";
 import { setupWebSocket } from "./sockets/socket";
-import { errorHandler, notFoundHandler } from "./utils/errorHandler";
+import { errorHandler, notFoundHandler } from "./utils/error-handler";
 import { initLogger, requestLogger } from "./utils/logger";
 
 dotenv.config();

@@ -2,8 +2,8 @@
 
 import {useEffect, useState} from "react";
 import type {UserModel} from "@/models/user.model";
-import {UserService} from "@/services/userService";
-import { getMe } from "@/services/authService";
+import {UserService} from "@/services/user.service";
+import { getMe } from "@/services/auth.service";
 import FriendCardComponent from "@/app/messages/components/friend-card.component";
 
 export default function FriendListComponent() {

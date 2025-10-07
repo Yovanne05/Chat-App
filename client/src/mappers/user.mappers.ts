@@ -15,6 +15,6 @@ export const toUser = (dto: UserDTO): UserModel => {
         username: dto.username,
         pseudo: dto.pseudo,
         email: dto.email,
-        friends: dto.friends.map(fid => ({ id: fid, username: "" })) // si backend ne renvoie que les IDs
+        friends: dto.friends.map(fid => ({ id: fid }))
     };
 };

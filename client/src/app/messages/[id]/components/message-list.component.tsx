@@ -1,7 +1,7 @@
 import { MessageDTO } from "@/dto/message.dto";
 import { UserModel } from "@/models/user.model";
 import {useEffect, useRef} from "react";
-import {formatMessageTime} from "@/utils/dateFormatter";
+import {formatMessageTime} from "@/utils/date-formatter";
 
 interface MessageListProps {
     messages: MessageDTO[];

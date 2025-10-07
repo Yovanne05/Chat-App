@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { MessageDTO } from "@/dto/message.dto";
-import { MessageService } from "@/services/messageService";
+import { MessageService } from "@/services/message.service";
 
 export const useMessages = (userId: string | null, friendId: string) => {
     const [messages, setMessages] = useState<MessageDTO[]>([]);

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { UserModel } from "@/models/user.model";
-import { getMe } from "@/services/authService";
+import { getMe } from "@/services/auth.service";
 
 export default function ProfilComponent() {
     const [user, setUser] = useState<UserModel | null>(null);

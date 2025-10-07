@@ -1,12 +1,12 @@
 import { MessageDTO } from "@/dto/message.dto";
-import { apiClient } from "@/services/apiClient";
+import { api } from "@/services/api";
 
 export class MessageService {
   public static async getConversation(
     userId: string,
     friendId: string
   ): Promise<MessageDTO[]> {
-    return apiClient.get<MessageDTO[]>(
+    return api.get<MessageDTO[]>(
       `/messages/conversation/${userId}/${friendId}`
     );
   }
@@ -15,7 +15,7 @@ export class MessageService {
     receiverId: string,
     content: string
   ): Promise<void> {
-    return apiClient.post(`/messages`, {
+    return api.post(`/messages`, {
       receiverId,
       content,
     });
