@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Chat App",
+  title: process.env.NEXT_PUBLIC_APP_NAME
 };
 
 export default function RootLayout({

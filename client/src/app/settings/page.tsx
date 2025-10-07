@@ -1,4 +1,4 @@
-import { LogoutButton } from "@/components/auth/LogoutButton";
+import { LogoutButton } from "@/components/logout-button.component";
 import ProfilComponent from "@/app/settings/components/profil";
 
 export default function SettingsPage() {
