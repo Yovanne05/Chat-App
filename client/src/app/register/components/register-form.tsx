@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useRegisterForm } from "@/app/login/hooks/useRegisterForm";
+import { useRegisterForm } from "@/app/register/hooks/useRegisterForm";
 import {UserModel} from "@/models/user.model";
 
 interface RegisterFormProps {

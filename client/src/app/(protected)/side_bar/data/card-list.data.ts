@@ -1,11 +1,11 @@
 import { HiOutlineCog, HiOutlineHome } from "react-icons/hi";
 import {LuMessageSquareText} from "react-icons/lu";
-import {CardProps} from "@/app/side_bar/types/card.type";
+import { CardProps } from "../types/card.type";
 
 export const cardList: CardProps[] = [
     {
         title: "Home",
-        route: "/",
+        route: "/home",
         icon: HiOutlineHome,
         collapsed: false,
     },

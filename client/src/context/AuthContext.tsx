@@ -21,6 +21,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<UserModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Vérifie le token au premier rendu
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem("token");
@@ -36,7 +37,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       } catch (error) {
         localStorage.removeItem("token");
         setUser(null);
-        console.error(error)
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
@@ -45,10 +46,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     checkAuth();
   }, []);
 
+  // ✅ Ici la correction principale
   const login = async (data: LoginData) => {
     try {
-      const loggedUser = await authService.login(data);
-      setUser(loggedUser);
+      await authService.login(data); // enregistre le token
+      const currentUser = await authService.getMe(); // récupère les infos de l'utilisateur
+      setUser(currentUser); // met à jour immédiatement le contexte
     } catch (error) {
       setUser(null);
       throw error;

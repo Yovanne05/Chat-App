@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import type {UserModel} from "@/models/user.model";
 import {UserService} from "@/services/user.service";
 import { getMe } from "@/services/auth.service";
-import FriendCardComponent from "@/app/messages/components/friend-card.component";
+import FriendCardComponent from "./friend-card.component";
 
 export default function FriendListComponent() {
     const [friends, setFriends] = useState<UserModel[] | null>(null);

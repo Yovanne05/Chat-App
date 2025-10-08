@@ -1,14 +1,11 @@
 import { FC } from 'react';
-import { AuthResponse } from "@/types/auth";
 import { useLoginForm } from "@/app/login/hooks/useLoginForm";
-import {UserModel} from "@/models/user.model";
 
 interface LoginFormProps {
-    onSuccess: (data: UserModel) => void;
     onError?: (error: Error) => void;
 }
 
-export const LoginForm: FC<LoginFormProps> = ({ onSuccess, onError }) => {
+export const LoginForm: FC<LoginFormProps> = ({ onError }) => {
     const {
         email,
         password,
@@ -16,7 +13,7 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess, onError }) => {
         setEmail,
         setPassword,
         handleSubmit,
-    } = useLoginForm({ onSuccess, onError });
+    } = useLoginForm({ onError });
 
     return (
         <div className="flex items-center justify-center px-4">

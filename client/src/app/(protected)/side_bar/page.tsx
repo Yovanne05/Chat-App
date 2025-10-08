@@ -5,11 +5,13 @@ import CardList from "./components/card-list.component";
 import { cardList } from "./data/card-list.data";
 import Logo from "@/components/logo.component";
 import UserLogo from "@/components/user-logo.component";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SideBarPage() {
   const [isHovered, setIsHovered] = useState(false);
-  const isAuthenticated = true;
+  const {user, isAuthenticated, isLoading} = useAuth();
 
+  if (isLoading) return null;
   if (!isAuthenticated) return null;
 
   return (
@@ -27,7 +29,7 @@ export default function SideBarPage() {
           <CardList CardProps={cardList} collapsed={!isHovered} />
         </nav>
 
-        <UserLogo isHovered={isHovered} firstName="John" lastName="Doe" />
+        <UserLogo isHovered={isHovered} username={user!.username} />
       </div>
     </div>
   );

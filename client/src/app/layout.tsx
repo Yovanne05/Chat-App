@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
-import SideBarPage from "./side_bar/page";
 import { SocketProvider } from "@/context/SocketContext";
 
 const geistSans = Geist({
@@ -31,7 +30,6 @@ export default function RootLayout({
       >
         <AuthProvider>
           <SocketProvider>
-            <SideBarPage />
             {children}
           </SocketProvider>
         </AuthProvider>
@@ -39,3 +37,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+

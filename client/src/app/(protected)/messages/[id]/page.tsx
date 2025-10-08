@@ -6,10 +6,11 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 import { useConversation } from "@/hooks/useConversation";
 import {useMessages} from "@/hooks/useMessage";
 import {MessageDTO} from "@/dto/message.dto";
-import {MessageHeader} from "@/app/messages/[id]/components/message-header.component";
-import {MessageList} from "@/app/messages/[id]/components/message-list.component";
-import {MessageInput} from "@/app/messages/[id]/components/message-input.component";
-import {LoadingSpinner} from "@/app/messages/[id]/components/loading-spinner.component";
+import { LoadingSpinner } from "./components/loading-spinner.component";
+import { MessageHeader } from "./components/message-header.component";
+import { MessageInput } from "./components/message-input.component";
+import { MessageList } from "./components/message-list.component";
+
 
 
 export default function ConversationPage() {

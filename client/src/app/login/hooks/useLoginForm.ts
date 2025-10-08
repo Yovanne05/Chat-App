@@ -1,25 +1,22 @@
 import { useState } from 'react';
-import { AuthResponse } from "@/types/auth";
-import { login } from "@/services/auth.service";
-import {UserModel} from "@/models/user.model";
+import { useAuth } from '@/context/AuthContext';
 
 interface UseLoginFormProps {
-    onSuccess: (data: UserModel) => void;
     onError?: (error: Error) => void;
 }
 
-export const useLoginForm = ({ onSuccess, onError }: UseLoginFormProps) => {
+export const useLoginForm = ({ onError }: UseLoginFormProps) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const { login } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
 
         try {
-            const response = await login({ email, password });
-            onSuccess(response);
+            await login({ email, password });
         } catch (error) {
             onError?.(error as Error);
         } finally {
