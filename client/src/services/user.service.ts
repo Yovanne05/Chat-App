@@ -1,6 +1,7 @@
 import { UserDTO } from "@/dto/user.dto";
 import { toUser } from "@/mappers/user.mappers";
 import { UserModel } from "@/models/user.model";
+import { api } from "@/services/api";
 export interface UserSearchParams {
   username?: string;
   email?: string;
@@ -14,8 +15,6 @@ export interface UserSearchParams {
 }
 
 export class UserService {
-  private static apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
   public static async findMany(
     params: Partial<UserSearchParams> = {}
   ): Promise<{ users: UserModel[]; total: number }> {
@@ -31,24 +30,19 @@ export class UserService {
     if (params.offset) queryParams.append("offset", params.offset.toString());
 
     const queryString = queryParams.toString();
-    const url = queryString
-      ? `${this.apiUrl}/users?${queryString}`
-      : `${this.apiUrl}/users`;
+    const endpoint = queryString ? `/users?${queryString}` : "/users";
 
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("Failed to fetch users");
-
-    const { users, total } = await response.json();
+    const { users, total } = await api.get<{
+      users: UserDTO[];
+      total: number;
+    }>(endpoint);
     const userModels = users.map((u: UserDTO) => toUser(u));
 
     return { users: userModels, total };
   }
 
   public static async findFriends(userId: string): Promise<UserModel[]> {
-    const response = await fetch(`${this.apiUrl}/users/${userId}/friends`);
-    if (!response.ok) throw new Error("Failed to fetch friends");
-
-    const data: UserDTO[] = await response.json();
+    const data = await api.get<UserDTO[]>(`/users/${userId}/friends`);
     return data.map(toUser);
   }
 }

@@ -3,7 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import SideBarPage from "./side_bar/page";
+import SideBar from "./side_bar/side-bar";
 
 export default function ProtectedLayout({
   children,
@@ -33,7 +33,7 @@ export default function ProtectedLayout({
 
   return (
     <div className="flex h-screen w-screen overflow-hidden">
-      <SideBarPage />
+      <SideBar />
       <main className="flex-1 h-full">
         {children}
       </main>

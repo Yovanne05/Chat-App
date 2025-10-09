@@ -1,22 +1,10 @@
 "use client";
 
-import { useAuth } from "@/context/AuthContext";
-import LoginPage from "@/app/login/page";
-
 export default function ProtectedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated, isLoading } = useAuth();
-
-  if (isLoading) {
-    return null;
-  }
-
-  if (!isAuthenticated) {
-    return <LoginPage />;
-  }
 
   return (
     <div className="flex">

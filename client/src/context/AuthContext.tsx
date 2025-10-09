@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { LoginData } from "@/types/auth";
+import { LoginData, RegisterData } from "@/types/auth";
 import type { UserModel } from "@/models/user.model";
 import * as authService from "@/services/auth.service";
 
@@ -9,7 +9,8 @@ interface AuthContextType {
   user: UserModel | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (data: LoginData) => Promise<void>;
+  login: (data: LoginData) => Promise<UserModel>;
+  register: (data: RegisterData) => Promise<UserModel>;
   logout: () => Promise<void>;
 }
 
@@ -21,7 +22,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [user, setUser] = useState<UserModel | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Vérifie le token au premier rendu
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem("token");
@@ -46,12 +46,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     checkAuth();
   }, []);
 
-  // ✅ Ici la correction principale
   const login = async (data: LoginData) => {
     try {
-      await authService.login(data); // enregistre le token
-      const currentUser = await authService.getMe(); // récupère les infos de l'utilisateur
-      setUser(currentUser); // met à jour immédiatement le contexte
+      const currentUser = await authService.login(data);
+      setUser(currentUser);
+      return currentUser;
+    } catch (error) {
+      setUser(null);
+      throw error;
+    }
+  };
+
+  const register = async (data: RegisterData) => {
+    try {
+      const newUser = await authService.register(data);
+      setUser(newUser);
+      return newUser;
     } catch (error) {
       setUser(null);
       throw error;
@@ -71,6 +81,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     isAuthenticated: !!user,
     isLoading,
     login,
+    register,
     logout,
   };
 

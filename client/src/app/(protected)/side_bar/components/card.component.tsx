@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { CardProps } from "../types/card.type";
 
@@ -8,8 +9,9 @@ export default function Card({ title, route, icon: Icon, collapsed }: CardProps)
 
   return (
     <li className="relative w-full mb-1">
-      <a
+      <Link
         href={route}
+        aria-label={collapsed ? title : undefined}
         className={`flex items-center px-3 py-3 rounded-lg transition-all duration-300 group relative overflow-hidden ${
           collapsed ? "justify-center" : "justify-start"
         } hover:bg-white/10 hover:shadow-lg`}
@@ -43,12 +45,13 @@ export default function Card({ title, route, icon: Icon, collapsed }: CardProps)
             className={`absolute left-full ml-6 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-xl whitespace-nowrap transition-all duration-200 pointer-events-none ${
               isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
             }`}
+            role="tooltip"
           >
             {title}
             <div className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent border-r-gray-900" />
           </div>
         )}
-      </a>
+      </Link>
     </li>
   );
 }
