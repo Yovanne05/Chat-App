@@ -1,5 +1,6 @@
 "use client";
-import { useEffect, useRef, useCallback } from "react";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 import io, { Socket } from "socket.io-client";
 import { MessageDTO } from "@/dto/message.dto";
 
@@ -16,56 +17,83 @@ export const useWebSocket = ({
 }: UseWebSocketProps) => {
   const socketRef = useRef<Socket | null>(null);
   const isConnectedRef = useRef(false);
+  const [isConnectedState, setIsConnectedState] = useState(false);
 
   useEffect(() => {
-    if (!userId) return;
-    if (socketRef.current?.connected) return;
+    if (!userId) {
+      socketRef.current?.disconnect();
+      socketRef.current = null;
+      isConnectedRef.current = false;
+      setIsConnectedState(false);
+      return;
+    }
 
-    socketRef.current = io(
+    if (socketRef.current?.connected) {
+      return;
+    }
+
+    const socket = io(
       process.env.NEXT_PUBLIC_WS_URL || "http://localhost:5000",
       {
         transports: ["websocket"],
         reconnection: true,
         reconnectionAttempts: 5,
         reconnectionDelay: 1000,
-      }
+      },
     );
 
-    socketRef.current.on("connect", () => {
+    socketRef.current = socket;
+
+    socket.on("connect", () => {
       isConnectedRef.current = true;
+      setIsConnectedState(true);
     });
 
-    socketRef.current.on("receive_message", onMessageReceived);
-
-    socketRef.current.on("message_error", (data: { error: string }) => {
-      onError?.(data.error);
-    });
-
-    socketRef.current.on("disconnect", () => {
+    socket.on("disconnect", () => {
       isConnectedRef.current = false;
+      setIsConnectedState(false);
     });
 
     return () => {
-      socketRef.current?.disconnect();
-      socketRef.current = null;
+      socket.disconnect();
+      if (socketRef.current === socket) {
+        socketRef.current = null;
+      }
       isConnectedRef.current = false;
+      setIsConnectedState(false);
     };
   }, [userId]);
 
   useEffect(() => {
-    if (socketRef.current) {
-      socketRef.current.off("receive_message");
-      socketRef.current.on("receive_message", onMessageReceived);
+    const socket = socketRef.current;
+    if (!socket) {
+      return;
     }
+
+    const handler = (message: MessageDTO) => {
+      onMessageReceived(message);
+    };
+
+    socket.on("receive_message", handler);
+    return () => {
+      socket.off("receive_message", handler);
+    };
   }, [onMessageReceived]);
 
   useEffect(() => {
-    if (socketRef.current && onError) {
-      socketRef.current.off("message_error");
-      socketRef.current.on("message_error", (data: { error: string }) => {
-        onError(data.error);
-      });
+    const socket = socketRef.current;
+    if (!socket || !onError) {
+      return;
     }
+
+    const handler = (data: { error: string }) => {
+      onError(data.error);
+    };
+
+    socket.on("message_error", handler);
+    return () => {
+      socket.off("message_error", handler);
+    };
   }, [onError]);
 
   const joinConversation = useCallback(
@@ -73,10 +101,10 @@ export const useWebSocket = ({
       if (socketRef.current?.connected && userId) {
         socketRef.current.emit("join_conversation", { userId, friendId });
       } else {
-        console.warn("⚠️ Socket non connecté lors de joinConversation");
+        console.warn("Socket non connecte lors de joinConversation");
       }
     },
-    [userId]
+    [userId],
   );
 
   const leaveConversation = useCallback(
@@ -85,7 +113,7 @@ export const useWebSocket = ({
         socketRef.current.emit("leave_conversation", { userId, friendId });
       }
     },
-    [userId]
+    [userId],
   );
 
   const sendMessage = useCallback(
@@ -97,18 +125,16 @@ export const useWebSocket = ({
           message,
         });
       } else {
-        console.error(
-          "❌ Impossible d'envoyer le message: socket non connecté"
-        );
+        console.error("Impossible d'envoyer le message: socket non connecte");
       }
     },
-    [userId]
+    [userId],
   );
 
   return {
     joinConversation,
     leaveConversation,
     sendMessage,
-    isConnected: socketRef.current?.connected || false,
+    isConnected: isConnectedState,
   };
 };

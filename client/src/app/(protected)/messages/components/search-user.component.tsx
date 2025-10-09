@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { LuLoaderCircle, LuLoader, LuSearch } from "react-icons/lu";
 import { UserService } from "@/services/user.service";
 import { UserModel } from "@/models/user.model";
 
@@ -10,7 +11,7 @@ export default function SearchUser() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSearch = async () => {
+  const handleSearch = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
@@ -23,11 +24,11 @@ export default function SearchUser() {
       setUsers(users);
     } catch (err) {
       console.error(err);
-      setError("Error while searching users");
+      setError("Impossible de recuperer les utilisateurs.");
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [query]);
 
   useEffect(() => {
     if (query.trim().length > 0) {
@@ -35,57 +36,57 @@ export default function SearchUser() {
         handleSearch();
       }, 400);
       return () => clearTimeout(timeout);
-    } else {
-      setUsers([]);
     }
-  }, [query]);
+
+    setUsers([]);
+    setError(null);
+  }, [query, handleSearch]);
 
   return (
-    <div className="w-full p-2">
-      <input
-        type="text"
-        placeholder="Search user..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="
-          w-full p-2 text-sm rounded-lg 
-          bg-gray-800 border border-gray-700 text-gray-200 
-          placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500
-          transition
-        "
-      />
+    <div className="relative w-full">
+      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-400">
+        Rechercher un contact
+      </p>
 
-      {/* Résultats */}
+      <div className="mt-3 flex items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-sm text-white shadow-inner shadow-slate-950/40 focus-within:border-indigo-400/40 focus-within:ring-2 focus-within:ring-indigo-400/30">
+        <LuSearch className="h-4 w-4 text-slate-400" />
+        <input
+          type="text"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder="Nom d'utilisateur..."
+          className="flex-1 bg-transparent text-sm text-white placeholder:text-slate-500 focus:outline-none"
+        />
+        {isLoading && <LuLoader className="h-4 w-4 animate-spin text-indigo-300" />}
+      </div>
+
       {query && (
-        <div className="mt-2 bg-gray-900 border border-gray-700 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-          {isLoading && (
-            <p className="text-gray-400 text-sm p-2">Searching...</p>
-          )}
-
+        <div className="absolute left-0 right-0 z-20 mt-3 max-h-64 overflow-y-auto rounded-2xl border border-white/10 bg-slate-950/85 backdrop-blur-xl shadow-xl shadow-indigo-500/20">
           {error && (
-            <p className="text-red-400 text-sm p-2">{error}</p>
+            <div className="flex items-center gap-2 border-b border-white/5 px-4 py-3 text-xs text-rose-300">
+              <LuLoaderCircle className="h-4 w-4" />
+              {error}
+            </div>
           )}
 
-          {!isLoading && users.length > 0 && (
-            <ul className="divide-y divide-gray-700">
-              {users.map((user) => (
-                <li
-                  key={user.id}
-                  className="p-2 hover:bg-gray-800 cursor-pointer transition-colors"
-                >
-                  <span className="block text-gray-100 text-sm font-medium">
-                    {user.username}
-                  </span>
-                  <span className="block text-gray-400 text-xs">{user.email}</span>
-                </li>
-              ))}
+          {!error && (
+            <ul className="divide-y divide-white/5">
+              {isLoading ? (
+                <li className="px-4 py-3 text-xs text-slate-300">Recherche en cours...</li>
+              ) : users.length > 0 ? (
+                users.map((user) => (
+                  <li
+                    key={user.id}
+                    className="cursor-pointer px-4 py-3 text-sm text-slate-200 transition-colors duration-150 hover:bg-white/10 hover:text-white"
+                  >
+                    <span className="block font-semibold text-white">{user.username}</span>
+                    <span className="block text-xs text-slate-400">{user.email}</span>
+                  </li>
+                ))
+              ) : (
+                <li className="px-4 py-3 text-xs text-slate-400">Aucun utilisateur trouve.</li>
+              )}
             </ul>
-          )}
-
-          {!isLoading && query && users.length === 0 && (
-            <p className="text-gray-500 text-sm p-2 text-center">
-              No users found
-            </p>
           )}
         </div>
       )}

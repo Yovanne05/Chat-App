@@ -1,14 +1,5 @@
-"use client";
+import { redirect } from "next/navigation";
 
-export default function ProtectedLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-
-  return (
-    <div className="flex">
-      <main>{children}</main>
-    </div>
-  );
+export default function RootRedirect() {
+  redirect("/home");
 }

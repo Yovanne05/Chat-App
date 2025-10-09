@@ -21,8 +21,8 @@ export default function ProtectedLayout({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+      <div className="flex min-h-screen items-center justify-center bg-slate-950/80">
+        <div className="h-14 w-14 animate-spin rounded-full border-2 border-indigo-500/30 border-t-indigo-400"></div>
       </div>
     );
   }
@@ -34,8 +34,10 @@ export default function ProtectedLayout({
   return (
     <div className="flex h-screen w-screen overflow-hidden">
       <SideBar />
-      <main className="flex-1 h-full">
-        {children}
+      <main className="relative flex-1 overflow-y-auto bg-gradient-to-br from-slate-950/60 via-slate-900/50 to-slate-950/70 px-10 py-10">
+        <div className="mx-auto flex h-full w-full max-w-6xl flex-col">
+          {children}
+        </div>
       </main>
     </div>
   );

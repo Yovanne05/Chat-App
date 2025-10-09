@@ -1,54 +1,61 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useMemo, useState } from "react";
 import { CardProps } from "../types/card.type";
 
 export default function Card({ title, route, icon: Icon, collapsed }: CardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = useMemo(() => {
+    if (route === "/") return pathname === "/";
+    return pathname === route || pathname.startsWith(`${route}/`);
+  }, [pathname, route]);
 
   return (
-    <li className="relative w-full mb-1">
+    <li className="relative w-full">
       <Link
         href={route}
         aria-label={collapsed ? title : undefined}
-        className={`flex items-center px-3 py-3 rounded-lg transition-all duration-300 group relative overflow-hidden ${
-          collapsed ? "justify-center" : "justify-start"
-        } hover:bg-white/10 hover:shadow-lg`}
+        className={`group relative flex items-center overflow-hidden rounded-xl border border-transparent px-3 py-3 transition-all duration-300 ${
+          isActive
+            ? "bg-white/10 shadow-lg shadow-indigo-500/20 ring-1 ring-indigo-400/40"
+            : "hover:bg-white/5 hover:shadow-lg hover:shadow-indigo-500/10"
+        }`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Effet de fond au survol */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all duration-300" />
-
-        {/* Icône */}
         <div
-          className={`relative z-10 flex items-center justify-center transition-all duration-300 ${
-            isHovered && !collapsed ? "scale-110" : "scale-100"
+          className={`relative z-10 grid h-10 w-10 place-items-center rounded-xl border border-white/5 bg-gradient-to-br from-indigo-500/20 via-purple-500/10 to-transparent transition-all duration-300 ${
+            isActive ? "ring-1 ring-indigo-400/40" : ""
           }`}
         >
-          <Icon className="w-5 h-5 text-white" strokeWidth={2} />
+          <Icon
+            className={`h-5 w-5 transition-all duration-300 ${
+              isActive ? "text-white" : "text-slate-200 group-hover:text-white"
+            } ${isHovered && !collapsed ? "scale-105" : "scale-100"}`}
+            strokeWidth={2}
+          />
         </div>
 
-        {/* Titre */}
         <span
-          className={`relative z-10 text-white font-medium whitespace-nowrap transition-all duration-300 ${
-            collapsed ? "opacity-0 w-0 ml-0" : "opacity-100 w-auto ml-4"
-          }`}
+          className={`relative z-10 ml-4 text-sm font-medium tracking-wide text-slate-200 transition-all duration-300 ${
+            collapsed ? "pointer-events-none hidden opacity-0" : "opacity-100"
+          } ${isActive ? "text-white" : ""}`}
         >
           {title}
         </span>
 
-        {/* Tooltip en mode réduit */}
         {collapsed && (
           <div
-            className={`absolute left-full ml-6 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-xl whitespace-nowrap transition-all duration-200 pointer-events-none ${
-              isHovered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-2"
+            className={`absolute left-full ml-4 flex items-center rounded-xl border border-white/10 bg-slate-900/85 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-100 shadow-lg shadow-indigo-500/20 backdrop-blur-md transition-all duration-200 ${
+              isHovered ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0"
             }`}
             role="tooltip"
           >
             {title}
-            <div className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent border-r-gray-900" />
           </div>
         )}
       </Link>

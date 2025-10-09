@@ -16,24 +16,24 @@ export const LoginForm: FC<LoginFormProps> = ({ onError }) => {
     } = useLoginForm({ onError });
 
     return (
-        <div className="flex items-center justify-center px-4">
-            <div className="bg-white/5 backdrop-blur-sm p-10 rounded-2xl max-w-md w-full shadow-xl border border-white/10">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+        <div className="flex w-full items-center justify-center px-4">
+            <div className="w-full max-w-lg rounded-3xl border border-white/10 bg-white/5 p-12 shadow-xl shadow-indigo-500/20 backdrop-blur-xl">
+                <form onSubmit={handleSubmit} className="space-y-8">
+                    <div className="space-y-2">
+                        <label htmlFor="email" className="text-sm font-semibold uppercase tracking-wide text-slate-200">
                             Email
                         </label>
                         <input
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="mt-2 block w-full rounded-xl bg-secondary-dark text-white border border-secondary placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary-500 p-3 transition-all"
+                            className="block w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white placeholder:text-slate-500 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400/60 transition-all duration-200"
                             required
                             placeholder="Entrez votre email"
                         />
                     </div>
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-300">
+                    <div className="space-y-2">
+                        <label htmlFor="password" className="text-sm font-semibold uppercase tracking-wide text-slate-200">
                             Mot de passe
                         </label>
                         <input
@@ -41,7 +41,7 @@ export const LoginForm: FC<LoginFormProps> = ({ onError }) => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="mt-2 block w-full rounded-xl bg-secondary-dark text-white border border-secondary placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary-500 p-3 transition-all"
+                            className="block w-full rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white placeholder:text-slate-500 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400/60 transition-all duration-200"
                             required
                             placeholder="Entrez votre mot de passe"
                         />
@@ -49,7 +49,7 @@ export const LoginForm: FC<LoginFormProps> = ({ onError }) => {
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full py-3 rounded-xl bg-secondary text-white text-base font-medium shadow-sm transition-all"
+                        className="w-full rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-400 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:scale-[1.01] hover:shadow-2xl disabled:cursor-not-allowed disabled:opacity-60"
                     >
                         {isLoading ? 'Connexion en cours...' : 'Se connecter'}
                     </button>

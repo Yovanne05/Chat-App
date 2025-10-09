@@ -7,22 +7,21 @@ interface LogoProps {
 export default function Logo({ isHovered }: LogoProps) {
   const appName = process.env.NEXT_PUBLIC_APP_NAME || "Pulse";
   return (
-    <div className="flex items-center justify-center h-16 border-b border-white/10">
-      <div
-        className={`transition-all duration-300 ${
-          isHovered ? "scale-100" : "scale-90"
-        }`}
-      >
-        {isHovered ? (
-          <h1 className="text-xl font-bold text-white tracking-wider">
+    <div className="flex h-20 items-center justify-center border-b border-white/10 px-4">
+      {isHovered ? (
+        <div className="flex w-full items-center justify-between">
+          <h1 className="text-lg font-semibold tracking-wide text-white">
             {appName}
           </h1>
-        ) : (
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-            {appName[0]}
-          </div>
-        )}
-      </div>
+          <span className="rounded-full bg-gradient-to-br from-indigo-500/40 to-purple-500/40 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-indigo-100">
+            Beta
+          </span>
+        </div>
+      ) : (
+        <div className="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 text-lg font-semibold text-white shadow-lg shadow-indigo-500/30">
+          {appName[0]}
+        </div>
+      )}
     </div>
   );
 }
