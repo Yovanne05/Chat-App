@@ -35,7 +35,7 @@ export default function ProtectedLayout({
     <div className="flex h-screen w-screen overflow-hidden">
       <SideBar />
       <main className="relative flex-1 overflow-y-auto bg-gradient-to-br from-slate-950/60 via-slate-900/50 to-slate-950/70 px-10 py-10">
-        <div className="mx-auto flex h-full w-full max-w-6xl flex-col">
+        <div className="mx-auto flex h-full w-full flex-col">
           {children}
         </div>
       </main>

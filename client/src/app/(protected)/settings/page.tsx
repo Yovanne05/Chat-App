@@ -3,7 +3,7 @@ import ProfilComponent from "./components/profil";
 
 export default function SettingsPage() {
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-col gap-8">
+    <div className="mx-auto flex w-full flex-col gap-8">
       <ProfilComponent />
       <div className="flex flex-col items-center justify-between gap-4 rounded-3xl border border-white/10 bg-white/5 px-10 py-8 text-center shadow-xl shadow-indigo-500/10 backdrop-blur-xl md:flex-row md:text-left">
         <div>

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface UserLogoProps {
   isHovered: boolean;
   username: string;
@@ -28,10 +30,14 @@ export default function UserLogo({ isHovered, username }: UserLogoProps) {
           )}
         </div>
 
-        {isHovered && (
-          <button className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-50 transition-all duration-200 hover:bg-white/10 hover:text-white">
-            Profil
-          </button>
+        {isHovered && 
+        
+        (
+          <Link href="/settings">
+            <button className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-50 transition-all duration-200 hover:bg-white/10 hover:text-white">
+              Profil
+            </button>
+          </Link>
         )}
       </div>
     </div>

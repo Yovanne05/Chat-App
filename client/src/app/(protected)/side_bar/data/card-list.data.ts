@@ -1,4 +1,4 @@
-import { HiOutlineCog, HiOutlineHome } from "react-icons/hi";
+import { HiOutlineHome } from "react-icons/hi";
 import {LuMessageSquareText} from "react-icons/lu";
 import { CardProps } from "../types/card.type";
 
@@ -14,11 +14,5 @@ export const cardList: CardProps[] = [
         route: "/messages",
         icon: LuMessageSquareText,
         collapsed: false,
-    },
-    {
-        title: "Settings",
-        route: "/settings",
-        icon: HiOutlineCog,
-        collapsed: false,
-    },
+    }
 ];
