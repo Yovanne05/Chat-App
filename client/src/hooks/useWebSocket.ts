@@ -66,7 +66,7 @@ export const useWebSocket = ({
 
   useEffect(() => {
     const socket = socketRef.current;
-    if (!socket) {
+    if (!socket || !isConnectedRef.current) {
       return;
     }
 
@@ -78,11 +78,11 @@ export const useWebSocket = ({
     return () => {
       socket.off("receive_message", handler);
     };
-  }, [onMessageReceived]);
+  }, [onMessageReceived, isConnectedState]);
 
   useEffect(() => {
     const socket = socketRef.current;
-    if (!socket || !onError) {
+    if (!socket || !onError || !isConnectedRef.current) {
       return;
     }
 
@@ -94,7 +94,7 @@ export const useWebSocket = ({
     return () => {
       socket.off("message_error", handler);
     };
-  }, [onError]);
+  }, [onError, isConnectedState]);
 
   const joinConversation = useCallback(
     (friendId: string) => {

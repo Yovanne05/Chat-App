@@ -28,8 +28,8 @@ export const loginUser = async (email: string, password: string) => {
   const user = await User.findOne({ email });
   if (!user) throw new Error("Utilisateur non trouvé");
 
-//   const isMatch = await bcrypt.compare(password, user.password);
-//   if (!isMatch) throw new Error("Identifiants invalides");
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) throw new Error("Identifiants invalides");
 
   const token = generateToken({ id: user._id });
   return { user, token };
