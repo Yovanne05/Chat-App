@@ -43,7 +43,7 @@ export class MessageRepository {
       .exec();
 
     if (!conversation || conversation.length === 0) {
-      throw new MessageNotFoundException(`${userId1}-${userId2}`);
+      return [];
     }
 
     return conversation;

@@ -40,8 +40,8 @@ export const findFriends = async (req: Request, res: Response) => {
   res.status(200).json(friendsDTO);
 };
 
-export const addFriendToUser = async (req: Request, res: Response) => {
-  const { idUser, friendUsername } = req.params;
-  await UserService.addFriend(idUser, friendUsername);
+export const removeFriend = async (req: Request, res: Response) => {
+  const { idUser, friendId } = req.params;
+  await UserService.removeFriend(idUser, friendId);
   res.status(200).json("");
-};
+}

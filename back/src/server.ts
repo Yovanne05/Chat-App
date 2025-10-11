@@ -8,6 +8,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import messageRoutes from "./routes/message.routes";
+import friendRequestRoutes from "./routes/friend-request.routes";
 import http from "http";
 import { setupWebSocket } from "./sockets/socket";
 import { errorHandler, notFoundHandler } from "./utils/error-handler";
@@ -43,6 +44,7 @@ mongoose
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes);
 app.use("/auth", authRoutes);
+app.use("/friend-requests", friendRequestRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

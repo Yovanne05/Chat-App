@@ -3,7 +3,7 @@ import {
   findMany,
   deleteMany,
   findFriends,
-  addFriendToUser
+  removeFriend
 } from "../controllers/user.controller";
 import { RouterBuilder } from "../utils/router-builder";
 
@@ -12,7 +12,7 @@ const router = new RouterBuilder()
   .get("/", findMany)
   .delete("/", deleteMany)
   .get("/:id/friends", findFriends)
-  .post("/:idUser/friends/:idNewFriend", addFriendToUser)
+  .delete("/:idUser/remove-friends/:friendId", removeFriend)
   .build();
 
 export default router;

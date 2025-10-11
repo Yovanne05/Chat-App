@@ -29,6 +29,22 @@ export class UserRepository {
     return user;
   }
 
+  static async findById(id: string): Promise<IUser | null> {
+    return User.findById(id);
+  }
+
+  static async areFriends(idUser: string, idFriend: string): Promise<boolean> {
+    const user = await User.findById(idUser).select("friends");
+
+    if (!user) {
+      throw new UserNotFoundException(idUser);
+    }
+
+    return user.friends.some(
+      (friend: { toString: () => string; }) => friend.toString() === idFriend.toString()
+    );
+  }
+
   static async findFriends(id: string): Promise<IUser[]> {
     const user = await User.findById(id).populate("friends");
     if (!user) throw new UserNotFoundException(id);
@@ -72,12 +88,12 @@ export class UserRepository {
     return { users, total };
   }
 
-  static async addFriend(idUser: string, friendUsername: string): Promise<boolean> {
+  static async addFriend(idUser: string, friendId: string): Promise<boolean> {
     const user = await User.findById(idUser);
-    const newFriend = await this.findByUsername(friendUsername);
+    const newFriend = await User.findById(friendId);
 
     if (!user || !newFriend) {
-      throw new UserNotFoundException(user ? friendUsername : idUser);
+      throw new UserNotFoundException(user ? friendId : idUser);
     }
 
     let updated = false;

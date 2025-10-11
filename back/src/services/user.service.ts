@@ -25,13 +25,6 @@ export class UserService {
     return friends.map(toUserDTO);
   }
 
-  static async addFriend(
-    userId: string,
-    friendUsername: string
-  ): Promise<boolean> {
-    return await UserRepository.addFriend(userId, friendUsername);
-  }
-
   static async removeFriend(
     userId: string,
     friendId: string

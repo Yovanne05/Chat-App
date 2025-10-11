@@ -45,4 +45,9 @@ export class UserService {
     const data = await api.get<UserDTO[]>(`/users/${userId}/friends`);
     return data.map(toUser);
   }
+
+  public static async removeFriend(userId: string, friendId: string): Promise<void> {
+    await api.delete(`/users/${userId}/remove-friends/${friendId}`);
+  }
+
 }

@@ -1,15 +1,21 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { LuLoaderCircle, LuLoader, LuSearch } from "react-icons/lu";
+import { LuLoaderCircle, LuLoader, LuSearch, LuX } from "react-icons/lu";
 import { UserService } from "@/services/user.service";
 import { UserModel } from "@/models/user.model";
+import UserProfil from "@/components/user-profil.component";
 
-export default function SearchUser() {
+interface SearchUserProps {
+  onFriendshipChange?: () => void;
+}
+
+export default function SearchUser({ onFriendshipChange }: SearchUserProps) {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState<UserModel[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserModel | null>(null);
 
   const handleSearch = useCallback(async () => {
     try {
@@ -24,7 +30,7 @@ export default function SearchUser() {
       setUsers(users);
     } catch (err) {
       console.error(err);
-      setError("Impossible de recuperer les utilisateurs.");
+      setError("Impossible de récupérer les utilisateurs.");
     } finally {
       setIsLoading(false);
     }
@@ -72,22 +78,49 @@ export default function SearchUser() {
           {!error && (
             <ul className="divide-y divide-white/5">
               {isLoading ? (
-                <li className="px-4 py-3 text-xs text-slate-300">Recherche en cours...</li>
+                <li className="px-4 py-3 text-xs text-slate-300">
+                  Recherche en cours...
+                </li>
               ) : users.length > 0 ? (
                 users.map((user) => (
                   <li
                     key={user.id}
+                    onClick={() => setSelectedUser(user)}
                     className="cursor-pointer px-4 py-3 text-sm text-slate-200 transition-colors duration-150 hover:bg-white/10 hover:text-white"
                   >
-                    <span className="block font-semibold text-white">{user.username}</span>
-                    <span className="block text-xs text-slate-400">{user.email}</span>
+                    <span className="block font-semibold text-white">
+                      {user.username}
+                    </span>
+                    <span className="block text-xs text-slate-400">
+                      {user.email}
+                    </span>
                   </li>
                 ))
               ) : (
-                <li className="px-4 py-3 text-xs text-slate-400">Aucun utilisateur trouve.</li>
+                <li className="px-4 py-3 text-xs text-slate-400">
+                  Aucun utilisateur trouvé.
+                </li>
               )}
             </ul>
           )}
+        </div>
+      )}
+
+      {/*Popup du profil utilisateur */}
+      {selectedUser && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="relative w-[90%] max-w-md">
+            <button
+              onClick={() => setSelectedUser(null)}
+              className="absolute -top-3 -right-3 rounded-full bg-slate-800 p-2 text-slate-300 hover:bg-slate-700 hover:text-white"
+            >
+              <LuX className="h-4 w-4" />
+            </button>
+            <UserProfil
+              user={selectedUser}
+              onFriendshipChange={onFriendshipChange}
+            />
+          </div>
         </div>
       )}
     </div>

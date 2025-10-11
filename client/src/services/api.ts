@@ -23,13 +23,14 @@ export const api = {
         ...this.getAuthHeader(),
       } as HeadersInit,
     });
+
     if (!response.ok) {
       throw new ApiError(response.status, "Failed to fetch data");
     }
     return response.json();
   },
 
-  async post<T>(endpoint: string, data: unknown): Promise<T> {
+  async post<T>(endpoint: string, data?: unknown): Promise<T> {
     const url = this.buildUrl(endpoint);
     const response = await fetch(url, {
       method: "POST",
@@ -37,11 +38,61 @@ export const api = {
         "Content-Type": "application/json",
         ...this.getAuthHeader(),
       } as HeadersInit,
-      body: JSON.stringify(data),
+      body: data ? JSON.stringify(data) : undefined,
     });
 
     if (!response.ok) {
       throw new ApiError(response.status, "Failed to post data");
+    }
+    return response.json();
+  },
+
+  async put<T>(endpoint: string, data?: unknown): Promise<T> {
+    const url = this.buildUrl(endpoint);
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        ...this.getAuthHeader(),
+      } as HeadersInit,
+      body: data ? JSON.stringify(data) : undefined,
+    });
+
+    if (!response.ok) {
+      throw new ApiError(response.status, "Failed to update data");
+    }
+    return response.json();
+  },
+
+  async patch<T>(endpoint: string, data?: unknown): Promise<T> {
+    const url = this.buildUrl(endpoint);
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        ...this.getAuthHeader(),
+      } as HeadersInit,
+      body: data ? JSON.stringify(data) : undefined,
+    });
+
+    if (!response.ok) {
+      throw new ApiError(response.status, "Failed to patch data");
+    }
+    return response.json();
+  },
+
+  async delete<T>(endpoint: string): Promise<T> {
+    const url = this.buildUrl(endpoint);
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        ...this.getAuthHeader(),
+      } as HeadersInit,
+    });
+
+    if (!response.ok) {
+      throw new ApiError(response.status, "Failed to delete data");
     }
     return response.json();
   },
